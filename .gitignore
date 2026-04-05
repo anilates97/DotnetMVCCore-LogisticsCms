@@ -1,0 +1,35 @@
+# Build output
+bin/
+obj/
+Debug/
+Release/
+
+# Local build/test artifacts
+temp-build-output/
+.dotnet-cli/
+
+# IDE folders and user-specific files
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / ReSharper
+.idea/
+_ReSharper*/
+*.DotSettings.user
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+
+# NuGet
+packages/
+*.nupkg
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+@await Component.InvokeAsync("AdminLayoutHead")
+
+  
+<body data-menu-color="light" data-sidebar="default">
+
+    <!-- Begin page -->
+    <div id="app-layout">
+
+        @await Component.InvokeAsync("AdminLayoutTopBar")
+
+        @await Component.InvokeAsync("AdminLayoutSideBar")
+
+
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                   
+
+                    @RenderBody()
+    
+                   
+                </div>
+            </div>
+        </div>
+
+          
+
+    </div>
+
+
+    <!-- Vendor -->
+    @await Component.InvokeAsync("AdminLayoutScripts")
+    @RenderSection("Scripts", required: false)
+
+        
+</body>
+
+</html>

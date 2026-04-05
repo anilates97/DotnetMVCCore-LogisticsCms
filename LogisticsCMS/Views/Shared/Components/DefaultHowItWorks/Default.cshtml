@@ -1,0 +1,49 @@
+﻿@model List<LogisticsCMS.Dtos.HowItWorkDtos.ResultHowItWorkDto>
+
+@if (Model != null && Model.Any())
+{
+    var featuredStep = Model.First();
+
+    <section class="section pt-85 bg-worldmap">
+        <div class="container">
+            <div class="text-center">
+                <img class="mb-15" src="/templates/assets/imgs/template/icons/favicon.svg" alt="transp">
+                <h2 class="color-brand-2 mb-20">How It Works</h2>
+                <p class="font-md color-grey-700">@featuredStep.Description</p>
+            </div>
+            <div class="row mt-50">
+                <div class="col-lg-6 mb-30">
+                    <div class="box-image-how">
+                        <img class="w-100" src="@featuredStep.ImageUrl" alt="@featuredStep.Title">
+                        <div class="box-info-bottom-img">
+                            <div class="image-play"><img class="mb-15" src="/templates/assets/imgs/template/icons/play.svg" alt="transp"></div>
+                            <div class="info-play">
+                                <h4 class="color-white mb-15">@featuredStep.Title</h4>
+                                <p class="font-sm color-white">@featuredStep.Description</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-30">
+                    <ul class="list-how-works">
+                        @foreach (var step in Model)
+                        {
+                            <li>
+                                <div class="image-how">
+                                    <span class="img">
+                                        <img src="@step.ImageUrl" alt="@step.Title">
+                                    </span>
+                                </div>
+                                <div class="info-how">
+                                    <h5 class="color-brand-2">@step.Title</h5>
+                                    <p class="font-md color-grey-700">@step.Description</p>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+

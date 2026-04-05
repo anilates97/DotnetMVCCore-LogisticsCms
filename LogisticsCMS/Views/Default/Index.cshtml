@@ -1,0 +1,62 @@
+@{
+  Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+    @await Component.InvokeAsync("DefaultHead")
+  
+  <body>
+
+    @await Component.InvokeAsync("DefaultBoxBar")
+
+    @await Component.InvokeAsync("DefaultHeader")
+   
+
+    @await Component.InvokeAsync("DefaultMobileMenu")
+   
+    <main class="main">
+        @await Component.InvokeAsync("DefaultSlider")
+
+     
+     @await Component.InvokeAsync("DefaultBrand")
+
+     @await Component.InvokeAsync("DefaultOffer")
+      
+     @await Component.InvokeAsync("DefaultAbout")
+
+     @await Component.InvokeAsync("DefaultGetInTouch")
+     
+      
+      @await Component.InvokeAsync("DefaultHowItWorks")
+
+      @await Component.InvokeAsync("DefaultTestimonial")
+
+      @await Component.InvokeAsync("DefaultWhatWeHaveDone")
+
+    
+      
+     
+      <section class="section bg-leading-company pt-95">
+        <div class="box-bg-leading"></div>
+        <div class="container"> 
+            @await Component.InvokeAsync("DefaultStatistics")
+
+         @await Component.InvokeAsync("DefaultCalculateShipping")
+         
+        </div>
+      </section>
+      
+       @await Component.InvokeAsync("DefaultFAQ")
+
+       @await Component.InvokeAsync("DefaultGetQuote")
+      
+     
+      @await Component.InvokeAsync("DefaultContact")
+      
+    </main>
+    @await Component.InvokeAsync("DefaultFooter")
+    @await Component.InvokeAsync("DefaultScripts")
+  </body>
+</html>
