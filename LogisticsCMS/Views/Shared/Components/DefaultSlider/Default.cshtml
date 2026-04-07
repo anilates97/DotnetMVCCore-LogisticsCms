@@ -1,28 +1,58 @@
 @model List<ResultSliderDto>
 
-<section class="section d-block">
+<section class="section d-block" id="top" data-nav-trigger>
     <div class="box-swiper">
         <div class="swiper-container swiper-group-1 swiper-banner-1">
             <div class="swiper-wrapper">
-                @foreach (var item in Model)
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var item in Model)
+                    {
+                        <div class="swiper-slide">
+                            <div class="banner-1" style="background-image:url(@item.ImageUrl)">
+                                <div class="container">
+                                    <div class="row align-items-center">
+                                        <div class="col-lg-12">
+                                            <p class="font-md color-white mb-15">@item.Title</p>
+                                            <h1 class="color-white mb-25">@item.SubTitle</h1>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <p class="font-md color-white mb-20">@item.Description</p>
+                                                </div>
+                                            </div>
+                                            <div class="box-button mt-30">
+                                                <a class="btn btn-brand-1-big hover-up mr-40" asp-controller="Tracking" asp-action="Index">Kargo Takip</a>
+                                                <a class="btn btn-play popup-youtube hover-up" href="https://www.youtube.com/watch?v=kCGf5uNE13I">
+                                                    <img src="/templates/assets/imgs/template/icons/play.svg" alt="">
+                                                    Nasıl Çalışır?
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
                 {
                     <div class="swiper-slide">
-                        <div class="banner-1" style="background-image:url(@item.ImageUrl)">
+                        <div class="banner-1" style="background-image:url('/templates/assets/imgs/page/homepage1/img1.png')">
                             <div class="container">
                                 <div class="row align-items-center">
                                     <div class="col-lg-12">
-                                        <p class="font-md color-white mb-15">@item.Title</p>
-                                        <h1 class="color-white mb-25">@item.SubTitle</h1>
+                                        <p class="font-md color-white mb-15">Lojistik Çözüm Ortağınız</p>
+                                        <h1 class="color-white mb-25">Güvenilir, Hızlı ve Profesyonel Taşımacılık</h1>
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <p class="font-md color-white mb-20">@item.Description</p>
+                                                <p class="font-md color-white mb-20">Deniz, hava, kara ve demir yolu taşımacılığında uçtan uca lojistik çözümler sunuyoruz.</p>
                                             </div>
                                         </div>
                                         <div class="box-button mt-30">
-                                            <a class="btn btn-brand-1-big hover-up mr-40" href="#">Kargo Hesapla</a>
-                                            <a class="btn btn-play popup-youtube hover-up" href="https://www.youtube.com/watch?v=kCGf5uNE13I">
-                                                <img src="/templates/assets/imgs/template/icons/play.svg" alt="">
-                                                Nasıl Çalışır ?
+                                            <a class="btn btn-brand-1-big hover-up mr-40" href="#services">Hizmetleri Keşfet</a>
+                                            <a class="btn btn-play popup-youtube hover-up" href="#about">
+                                                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg>
+                                                Daha Fazla Bilgi
                                             </a>
                                         </div>
                                     </div>

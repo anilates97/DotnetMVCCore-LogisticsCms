@@ -1,94 +1,64 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using LogisticsCMS.Dtos.HowItWorkDtos;
-using LogisticsCMS.Services.HowItWorkService;
+using AutoMapper;
+using LogisticsCMS.Dtos.HowItWork;
+using LogisticsCMS.Services.HowItWork;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LogisticsCMS.Controllers
 {
-    public class HowItWorkController : Controller
+    public class HowItWorkController : CrudControllerBase
     {
         private readonly IHowItWorkService _howItWorkService;
+        private readonly IMapper _mapper;
 
-        public HowItWorkController(IHowItWorkService howItWorkService)
+        public HowItWorkController(IHowItWorkService howItWorkService, IMapper mapper)
         {
             _howItWorkService = howItWorkService;
+            _mapper = mapper;
         }
 
-        public async Task<IActionResult> HowItWorkList()
+        public async Task<IActionResult> Index()
         {
             var values = await _howItWorkService.GetAllHowItWorksAsync();
             return View(values);
         }
 
         [HttpGet]
-        public IActionResult CreateHowItWork()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateHowItWork(CreateHowItWorkDto createHowItWorkDto)
+        public async Task<IActionResult> Create(CreateHowItWorkDto createDto)
         {
-            if (ModelState.IsValid)
-            {
-                await _howItWorkService.CreateHowItWorkAsync(createHowItWorkDto);
-                return RedirectToAction(nameof(HowItWorkList));
-            }
-
-            return View(createHowItWorkDto);
+            return await SaveAndRedirectAsync(
+                createDto,
+                dto => _howItWorkService.CreateHowItWorkAsync(dto)
+            );
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateHowItWork(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var value = await _howItWorkService.GetHowItWorkByIdAsync(id);
-            if (value == null)
-            {
-                return NotFound();
-            }
-
-            var updateDto = new UpdateHowItWorkDto
-            {
-                HowItWorkId = value.HowItWorkId,
-                Title = value.Title,
-                Description = value.Description,
-                ImageUrl = value.ImageUrl,
-                Status = value.Status
-            };
-
-            return View(updateDto);
+            return await LoadEditViewAsync(
+                () => _howItWorkService.GetHowItWorkByIdAsync(id),
+                value => _mapper.Map<UpdateHowItWorkDto>(value)
+            );
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateHowItWork(UpdateHowItWorkDto updateHowItWorkDto)
+        public async Task<IActionResult> Edit(UpdateHowItWorkDto updateDto)
         {
-            if (ModelState.IsValid)
-            {
-                await _howItWorkService.UpdateHowItWorkAsync(updateHowItWorkDto);
-                return RedirectToAction(nameof(HowItWorkList));
-            }
-
-            return View(updateHowItWorkDto);
+            return await SaveAndRedirectAsync(
+                updateDto,
+                dto => _howItWorkService.UpdateHowItWorkAsync(dto)
+            );
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteHowItWork(string id)
+        [AcceptVerbs("GET", "POST")]
+        public async Task<IActionResult> Delete(string id)
         {
-            await _howItWorkService.DeleteHowItWorkAsync(id);
-            return RedirectToAction(nameof(HowItWorkList));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> DeleteStep(string id)
-        {
-            await _howItWorkService.DeleteHowItWorkAsync(id);
-            return RedirectToAction(nameof(HowItWorkList));
-        }
-
-        [HttpGet]
-        public Task<IActionResult> UpdateStep(string id)
-        {
-            return UpdateHowItWork(id);
+            return await DeleteAndRedirectAsync(() => _howItWorkService.DeleteHowItWorkAsync(id));
         }
     }
 }
-

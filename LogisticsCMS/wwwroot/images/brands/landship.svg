@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="120" viewBox="0 0 320 120" fill="none">
+  <rect width="320" height="120" rx="24" fill="#F4FAFF"/>
+  <g transform="translate(34 24)">
+    <path d="M30 0L50 10V32C50 47 41 60 30 68C19 60 10 47 10 32V10L30 0Z" fill="#1E4C7A"/>
+    <path d="M18 16H42V24H18V16Z" fill="#F6C244"/>
+    <path d="M14 29H46V38H14V29Z" fill="#2F7CC2"/>
+    <path d="M14 43H46C43 50 37 57 30 62C23 57 17 50 14 43Z" fill="#F0B42F"/>
+  </g>
+  <text x="105" y="55" fill="#1E4C7A" font-family="Manrope, Arial, sans-serif" font-size="29" font-weight="800">Land</text>
+  <text x="106" y="82" fill="#466B8B" font-family="Manrope, Arial, sans-serif" font-size="27" font-weight="700">Ship</text>
+</svg>

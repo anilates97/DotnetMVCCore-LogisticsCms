@@ -1,87 +1,64 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using LogisticsCMS.Dtos.QuestionDtos;
-using LogisticsCMS.Services.QuestionService;
+using AutoMapper;
+using LogisticsCMS.Dtos.Question;
+using LogisticsCMS.Services.Question;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LogisticsCMS.Controllers
 {
-    public class QuestionController : Controller
+    public class QuestionController : CrudControllerBase
     {
         private readonly IQuestionService _questionService;
+        private readonly IMapper _mapper;
 
-        public QuestionController(IQuestionService questionService)
+        public QuestionController(IQuestionService questionService, IMapper mapper)
         {
             _questionService = questionService;
+            _mapper = mapper;
         }
 
-        public async Task<IActionResult> QuestionList()
+        public async Task<IActionResult> Index()
         {
             var values = await _questionService.GetAllQuestionsAsync();
             return View(values);
         }
 
         [HttpGet]
-        public IActionResult CreateQuestion()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateQuestion(CreateQuestionDto createQuestionDto)
+        public async Task<IActionResult> Create(CreateQuestionDto createDto)
         {
-            if (ModelState.IsValid)
-            {
-                await _questionService.CreateQuestionAsync(createQuestionDto);
-                return RedirectToAction(nameof(QuestionList));
-            }
-
-            return View(createQuestionDto);
+            return await SaveAndRedirectAsync(
+                createDto,
+                dto => _questionService.CreateQuestionAsync(dto)
+            );
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateQuestion(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var value = await _questionService.GetQuestionByIdAsync(id);
-            if (value == null)
-            {
-                return NotFound();
-            }
-
-            var updateDto = new UpdateQuestionDto
-            {
-                QuestionId = value.QuestionId,
-                Title = value.Title,
-                Description = value.Description,
-                Status = value.Status
-            };
-
-            return View(updateDto);
+            return await LoadEditViewAsync(
+                () => _questionService.GetQuestionByIdAsync(id),
+                value => _mapper.Map<UpdateQuestionDto>(value)
+            );
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateQuestion(UpdateQuestionDto updateQuestionDto)
+        public async Task<IActionResult> Edit(UpdateQuestionDto updateDto)
         {
-            if (ModelState.IsValid)
-            {
-                await _questionService.UpdateQuestionAsync(updateQuestionDto);
-                return RedirectToAction(nameof(QuestionList));
-            }
-
-            return View(updateQuestionDto);
+            return await SaveAndRedirectAsync(
+                updateDto,
+                dto => _questionService.UpdateQuestionAsync(dto)
+            );
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteQuestion(string id)
+        [AcceptVerbs("GET", "POST")]
+        public async Task<IActionResult> Delete(string id)
         {
-            await _questionService.DeleteQuestionAsync(id);
-            return RedirectToAction(nameof(QuestionList));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> DeleteFaq(string id)
-        {
-            await _questionService.DeleteQuestionAsync(id);
-            return RedirectToAction(nameof(QuestionList));
+            return await DeleteAndRedirectAsync(() => _questionService.DeleteQuestionAsync(id));
         }
     }
 }
-

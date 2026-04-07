@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using LogisticsCMS.Services.OfferService;
+using LogisticsCMS.Services.Offer;
 
 namespace LogisticsCMS.ViewComponents.DefaultComponents
 {

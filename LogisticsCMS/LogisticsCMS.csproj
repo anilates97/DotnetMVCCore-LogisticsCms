@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>LogisticsCMS-572d5d8e-251d-4d0c-8a6f-0f3d8cc35b85</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,4 +11,10 @@
     <PackageReference Include="MongoDB.Driver" Version="3.7.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="LogisticsCMS.Tests\**\*.cs" />
+    <Content Remove="LogisticsCMS.Tests\**" />
+    <EmbeddedResource Remove="LogisticsCMS.Tests\**" />
+    <None Remove="LogisticsCMS.Tests\**" />
+  </ItemGroup>
 </Project>

@@ -1,80 +1,64 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using LogisticsCMS.Dtos.AboutDtos;
-using LogisticsCMS.Services.AboutService;
+using AutoMapper;
+using LogisticsCMS.Dtos.About;
+using LogisticsCMS.Services.About;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LogisticsCMS.Controllers
 {
-    public class AboutController : Controller
+    public class AboutController : CrudControllerBase
     {
         private readonly IAboutService _aboutService;
+        private readonly IMapper _mapper;
 
-        public AboutController(IAboutService aboutService)
+        public AboutController(IAboutService aboutService, IMapper mapper)
         {
             _aboutService = aboutService;
+            _mapper = mapper;
         }
 
-        public async Task<IActionResult> AboutList()
+        public async Task<IActionResult> Index()
         {
             var abouts = await _aboutService.GetAllAboutsAsync();
             return View(abouts);
         }
 
         [HttpGet]
-        public IActionResult CreateAbout()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAbout(CreateAboutDto createAboutDto)
+        public async Task<IActionResult> Create(CreateAboutDto createAboutDto)
         {
-            if (ModelState.IsValid)
-            {
-                await _aboutService.CreateAboutAsync(createAboutDto);
-                return RedirectToAction(nameof(AboutList));
-            }
-
-            return View(createAboutDto);
+            return await SaveAndRedirectAsync(
+                createAboutDto,
+                dto => _aboutService.CreateAboutAsync(dto)
+            );
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateAbout(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var about = await _aboutService.GetAboutByIdAsync(id);
-            if (about == null)
-            {
-                return NotFound();
-            }
-
-            var updateAboutDto = new UpdateAboutDto
-            {
-                AboutId = about.AboutId,
-                Title = about.Title,
-                Description = about.Description,
-                ImageUrl = about.ImageUrl
-            };
-
-            return View(updateAboutDto);
+            return await LoadEditViewAsync(
+                () => _aboutService.GetAboutByIdAsync(id),
+                about => _mapper.Map<UpdateAboutDto>(about)
+            );
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateAbout(UpdateAboutDto updateAboutDto)
+        public async Task<IActionResult> Edit(UpdateAboutDto updateAboutDto)
         {
-            if (ModelState.IsValid)
-            {
-                await _aboutService.UpdateAboutAsync(updateAboutDto);
-                return RedirectToAction(nameof(AboutList));
-            }
-
-            return View(updateAboutDto);
+            return await SaveAndRedirectAsync(
+                updateAboutDto,
+                dto => _aboutService.UpdateAboutAsync(dto)
+            );
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteAbout(string id)
+        [AcceptVerbs("GET", "POST")]
+        public async Task<IActionResult> Delete(string id)
         {
-            await _aboutService.DeleteAboutAsync(id);
-            return RedirectToAction(nameof(AboutList));
+            return await DeleteAndRedirectAsync(() => _aboutService.DeleteAboutAsync(id));
         }
     }
 }
-

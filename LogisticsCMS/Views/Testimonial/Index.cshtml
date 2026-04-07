@@ -1,0 +1,178 @@
+@model List<ResultTestimonialDto>
+@{
+    ViewData["Title"] = "Müşteri Yorumları Listesi";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/views/Testimonial/Index.css" asp-append-version="true" />
+}
+
+<div class="testimonial-list-container">
+    <div class="page-header">
+        <div class="header-left">
+            <div class="header-ornament">
+                <div class="ornament-line"></div>
+                <div class="ornament-diamond"></div>
+                <div class="ornament-line"></div>
+            </div>
+            <h1 class="page-title">
+                <span class="title-accent">Müşteri</span> Yorumları
+            </h1>
+            <p class="page-subtitle">Tüm müşteri değerlendirmelerini görüntüleyin ve yönetin.</p>
+        </div>
+        <div class="header-actions">
+            <a asp-controller="Testimonial" asp-action="Create" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                <span>Yeni Yorum</span>
+            </a>
+            <button class="btn btn-icon" title="Yenile" onclick="location.reload()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="22" height="22">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="stats-bar">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Toplam Yorum</div>
+                <div class="stat-value">@(Model?.Count ?? 0)</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Aktif</div>
+                <div class="stat-value">@(Model?.Count(x => x.Status) ?? 0)</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Pasif</div>
+                <div class="stat-value">@(Model?.Count(x => !x.Status) ?? 0)</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Ort. Puan</div>
+                <div class="stat-value">@((Model != null && Model.Any()) ? Model.Average(x => x.ReviewScore).ToString("0.0") : "0.0")</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="control-bar">
+        <div class="search-box">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input type="text" class="search-input" id="searchInput" placeholder="Müşteri ara..." />
+        </div>
+        <div class="filter-group">
+            <button class="filter-btn active" data-filter="all">Tümü</button>
+            <button class="filter-btn" data-filter="active">Aktif</button>
+            <button class="filter-btn" data-filter="inactive">Pasif</button>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="testimonials-grid" id="testimonialsGrid">
+            @foreach (var testimonial in Model)
+            {
+                <div class="testimonial-card"
+                     data-status="@(testimonial.Status ? "active" : "inactive")"
+                     data-name="@testimonial.NameSurname.ToLower()">
+                    <div class="card-quote">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
+                        </svg>
+                    </div>
+
+                    <div class="card-header">
+                        <div class="avatar">
+                            <img src="@testimonial.ImageUrl" alt="@testimonial.NameSurname" />
+                        </div>
+                        <h3 class="customer-name">@testimonial.NameSurname</h3>
+                        <p class="customer-title">@testimonial.Title</p>
+                        <div class="rating-stars">
+                            @for (int i = 0; i < 5; i++)
+                            {
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="opacity: @(i < testimonial.ReviewScore ? "1" : "0.3")">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            }
+                        </div>
+                    </div>
+
+                    <p class="review-text">"@testimonial.ReviewDetails"</p>
+
+                    <div class="card-footer">
+                        <div class="meta-info">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                            </svg>
+                            ID: @testimonial.TestimonialId.Substring(0, 6)
+                        </div>
+                        <div class="status-badge @(testimonial.Status ? "active" : "inactive")">
+                            @(testimonial.Status ? "Aktif" : "Pasif")
+                        </div>
+                    </div>
+
+                    <div class="card-actions">
+                        <a asp-controller="Testimonial" asp-action="Edit" asp-route-id="@testimonial.TestimonialId" class="action-btn edit">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                            Düzenle
+                        </a>
+                        <a asp-controller="Testimonial" asp-action="Delete" asp-route-id="@testimonial.TestimonialId"
+                           class="action-btn delete"
+                           onclick="return confirm('Bu yorumu silmek istediğinizden emin misiniz?')">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Sil
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="pagination">
+            <button class="page-btn" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <div class="empty-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                </svg>
+            </div>
+            <h3 class="empty-title">
+                Henüz <span>Yorum</span> Yok
+            </h3>
+            <p class="empty-text">Müşterilerinizin değerli görüşlerini ekleyerek başlayın.</p>
+            <a asp-controller="Testimonial" asp-action="Create" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                <span>İlk Yorumu Ekle</span>
+            </a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/js/views/Testimonial/Index.js" asp-append-version="true"></script>
+}

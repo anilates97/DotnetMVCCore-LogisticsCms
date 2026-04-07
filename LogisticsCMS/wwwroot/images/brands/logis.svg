@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="120" viewBox="0 0 320 120" fill="none">
+  <rect width="320" height="120" rx="24" fill="#F5FBFF"/>
+  <g transform="translate(30 31)">
+    <path d="M10 8H40L52 29L40 50H10L0 29L10 8Z" fill="#1D4D8E"/>
+    <path d="M18 18H32L39 29L32 40H18L12 29L18 18Z" fill="#FDBA21"/>
+    <path d="M44 18H70L82 29L70 40H44L54 29L44 18Z" fill="#1D4D8E"/>
+  </g>
+  <text x="123" y="55" fill="#1D4D8E" font-family="Manrope, Arial, sans-serif" font-size="33" font-weight="900">LOGIS</text>
+  <text x="124" y="80" fill="#F39B11" font-family="Manrope, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="2">DELIVERY</text>
+</svg>

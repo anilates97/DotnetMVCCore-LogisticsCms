@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using LogisticsCMS.Services.HowItWorkService;
+using LogisticsCMS.Services.HowItWork;
 
 namespace LogisticsCMS.ViewComponents.DefaultComponents
 {

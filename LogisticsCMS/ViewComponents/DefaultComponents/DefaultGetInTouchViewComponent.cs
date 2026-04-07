@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using LogisticsCMS.Services.GetInTouchSectionService;
+using LogisticsCMS.Services.GetInTouchSection;
 
 namespace LogisticsCMS.ViewComponents.DefaultComponents
 {

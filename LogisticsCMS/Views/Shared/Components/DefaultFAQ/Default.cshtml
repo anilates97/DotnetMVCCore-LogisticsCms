@@ -1,86 +1,107 @@
 @model List<ResultQuestionDto>
 
-<section class="section pt-80 mb-70 bg-faqs">
+<section class="faq-section" id="faq">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="box-faqs-left">
-                    <h2 class="title-favicon mb-20">FAQs</h2>
-                    <p class="font-md color-grey-700 mb-50">Merak ettiklerinizi hızlıca keşfedin ya da daha fazla destek için bizimle iletişime geçin.</p>
-                    <div class="box-gallery-faqs">
-                        <div class="image-top">
-                            <img src="/templates/assets/imgs/page/homepage1/img-faq1.png" alt="transp">
+        <div class="faq-grid">
+            <div class="faq-overview">
+                <div class="faq-header">
+                    <span class="section-badge">Sorular ve Yanıtlar</span>
+                    <h2 class="section-title">Sık Sorulan Sorular</h2>
+                    <p>Süreç, teslimat ve operasyon detaylarını kolayca inceleyin. En çok merak edilen başlıkları daha net ve hızlı okunacak şekilde burada topladık.</p>
+                </div>
+
+                <div class="faq-highlight-card">
+                    <div class="faq-highlight-copy">
+                        <span class="faq-highlight-label">Hızlı Destek Akışı</span>
+                        <h3>Sorularınızı adım adım, tek bakışta anlayın</h3>
+                        <p>Her soru ayrı bir bilgi kartı olarak sunulur. Açılan cevap alanı ise sürecin kritik detaylarını doğrudan gösterir.</p>
+                    </div>
+                    <div class="faq-highlight-stats">
+                        <div class="faq-stat">
+                            <strong>@(Model?.Count ?? 0)+</strong>
+                            <span>Net başlık</span>
                         </div>
-                        <div class="image-bottom">
-                            <div class="image-faq-1">
-                                <img src="/templates/assets/imgs/page/homepage1/img-faq2.png" alt="transp">
-                            </div>
-                            <div class="image-faq-2">
-                                <img src="/templates/assets/imgs/page/homepage1/img-faq3.png" alt="transp">
-                            </div>
+                        <div class="faq-stat">
+                            <strong>7/24</strong>
+                            <span>Destek akışı</span>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="box-accordion">
-                    <div class="accordion" id="accordionFAQ">
-                        @if (Model != null && Model.Any())
-                        {
-                            @for (int i = 0; i < Model.Count; i++)
-                            {
-                                var item = Model[i];
-                                var headingId = $"headingFaq{i}";
-                                var collapseId = $"collapseFaq{i}";
-                                var isFirstItem = i == 0;
 
-                                <div class="accordion-item">
-                                    <h5 class="accordion-header" id="@headingId">
-                                        <button class="accordion-button text-heading-5 @(isFirstItem ? "" : "collapsed")"
-                                                type="button"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target="#@collapseId"
-                                                aria-expanded="@(isFirstItem ? "true" : "false")"
-                                                aria-controls="@collapseId">
-                                            @item.Title
-                                        </button>
-                                    </h5>
-                                    <div class="accordion-collapse collapse @(isFirstItem ? "show" : "")"
-                                         id="@collapseId"
-                                         aria-labelledby="@headingId"
-                                         data-bs-parent="#accordionFAQ">
-                                        <div class="accordion-body">@item.Description</div>
-                                    </div>
-                                </div>
-                            }
-                        }
-                        else
+                <div class="faq-gallery">
+                    <img src="/templates/assets/imgs/page/homepage1/img-faq1.png" alt="LojiS liman operasyonu" loading="lazy">
+                    <img src="/templates/assets/imgs/page/homepage1/img-faq2.png" alt="LojiS konteyner operasyonu" loading="lazy">
+                    <img src="/templates/assets/imgs/page/homepage1/img-faq3.png" alt="LojiS dağıtım operasyonu" loading="lazy">
+                </div>
+            </div>
+
+            <div class="faq-panel">
+                <div class="accordion faq-accordion" id="accordionFAQ">
+                    @if (Model != null && Model.Any())
+                    {
+                        @for (int i = 0; i < Model.Count; i++)
                         {
-                            <div class="accordion-item">
-                                <h5 class="accordion-header" id="headingFaqEmpty">
-                                    <button class="accordion-button text-heading-5"
+                            var item = Model[i];
+                            var headingId = "headingFaq" + i;
+                            var collapseId = "collapseFaq" + i;
+                            var isFirstItem = i == 0;
+                            var order = (i + 1).ToString();
+
+                            <div class="accordion-item faq-item">
+                                <h5 class="accordion-header" id="@headingId">
+                                    <button class="accordion-button faq-question @(isFirstItem ? "" : "collapsed")"
                                             type="button"
                                             data-bs-toggle="collapse"
-                                            data-bs-target="#collapseFaqEmpty"
-                                            aria-expanded="true"
-                                            aria-controls="collapseFaqEmpty">
-                                        Sik sorulan sorular yakinda burada olacak
+                                            data-bs-target="#@collapseId"
+                                            aria-expanded="@(isFirstItem ? "true" : "false")"
+                                            aria-controls="@collapseId">
+                                        <span class="faq-question-index">@order</span>
+                                        <span class="faq-question-text">@item.Title</span>
                                     </button>
                                 </h5>
-                                <div class="accordion-collapse collapse show"
-                                     id="collapseFaqEmpty"
-                                     aria-labelledby="headingFaqEmpty"
+                                <div class="accordion-collapse collapse @(isFirstItem ? "show" : "")"
+                                     id="@collapseId"
+                                     aria-labelledby="@headingId"
                                      data-bs-parent="#accordionFAQ">
-                                    <div class="accordion-body">Icerikler yonetim panelinden eklendiginde bu alan otomatik olarak guncellenecek.</div>
+                                    <div class="accordion-body">
+                                        <p>@item.Description</p>
+                                    </div>
                                 </div>
                             </div>
                         }
-                    </div>
-                    <div class="line-border mt-50 mb-50"></div>
-                    <h3 class="color-brand-2">Daha fazla yardima mi ihtiyaciniz var?</h3>
-                    <div class="mt-20">
-                        <a class="btn btn-brand-1-big mr-20" href="/Contact/Index">Bize Ulasin</a>
-                        <a class="btn btn-link-medium" href="/About/Index">
+                    }
+                    else
+                    {
+                        <div class="accordion-item faq-item">
+                            <h5 class="accordion-header" id="headingFaqEmpty">
+                                <button class="accordion-button faq-question"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseFaqEmpty"
+                                        aria-expanded="true"
+                                        aria-controls="collapseFaqEmpty">
+                                    <span class="faq-question-index">1</span>
+                                    <span class="faq-question-text">Sık sorulan sorular yakında burada olacak</span>
+                                </button>
+                            </h5>
+                            <div class="accordion-collapse collapse show"
+                                 id="collapseFaqEmpty"
+                                 aria-labelledby="headingFaqEmpty"
+                                 data-bs-parent="#accordionFAQ">
+                                <div class="accordion-body">
+                                    <p>İçerikler yönetim panelinden eklendiğinde bu alan otomatik olarak güncellenecek.</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="faq-contact">
+                    <h3>Daha fazla yardıma mı ihtiyacınız var?</h3>
+                    <p>Doğrudan ekibimizle iletişime geçin ya da hizmet akışlarını daha detaylı inceleyin.</p>
+                    <div class="faq-contact-actions">
+                        <a class="btn btn-brand-1-big" href="#contact">Bize Ulaşın</a>
+                        <a class="btn btn-link-medium" href="#about">
                             Daha Fazla Bilgi
                             <svg class="w-6 h-6 icon-16 ml-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>

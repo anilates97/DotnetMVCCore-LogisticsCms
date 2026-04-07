@@ -1,0 +1,155 @@
+@model CreateQuestionDto
+@{
+    ViewData["Title"] = "CreateQuestion";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/views/Question/Create.css" asp-append-version="true" />
+}
+
+
+<div class="question-create-container">
+    <!-- Header -->
+    <div class="page-header">
+        <div class="glitch-wrapper">
+            <h1 class="page-title">FAQ</h1>
+        </div>
+        <p class="page-subtitle">Yeni Soru Ekle</p>
+        <div class="accent-line"></div>
+    </div>
+
+    <!-- Split Layout -->
+    <form method="post" asp-controller="Question" asp-action="Create" id="questionForm">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <div class="split-layout">
+            <!-- Form Column -->
+            <div class="form-column">
+                <!-- Main Card -->
+                <div class="form-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h2 class="card-title">Soru Bilgileri</h2>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Title">
+                            Soru Ba?l?ğ? <span class="label-required">*</span>
+                        </label>
+                        <input type="text" 
+                               class="form-input" 
+                               asp-for="Title" 
+                               id="titleInput"
+                               placeholder="?rn: Kargo teslimat s?resi ne kadar?"
+                               maxlength="200"
+                               required />
+<span asp-validation-for="Title" class="text-danger"></span>
+                        <div class="input-meta">
+                            <div class="input-hint">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Net ve anla??l?r soru yaz?n
+                            </div>
+                            <span class="char-counter">
+                                <span id="titleCounter">0</span>/200
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Description">
+                            Cevap <span class="label-required">*</span>
+                        </label>
+                        <textarea class="form-textarea" 
+                                  asp-for="Description" 
+                                  id="descriptionInput"
+                                  placeholder="Sorunun detayl? cevab?n? buraya yaz?n..."
+                                  maxlength="1000"
+                                  required></textarea>
+<span asp-validation-for="Description" class="text-danger"></span>
+                        <div class="input-meta">
+                            <div class="input-hint">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                Kapsaml? ve yard?mc? bir cevap verin
+                            </div>
+                            <span class="char-counter">
+                                <span id="descCounter">0</span>/1000
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="status-wrapper">
+                            <div class="status-label">
+                                <h4>Yay?n Durumu</h4>
+                                <p>Soruyu an?nda yay?nla</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" asp-for="Status" id="statusToggle" checked />
+<span asp-validation-for="Status" class="text-danger"></span>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Box -->
+                <div class="info-box">
+                    <h3 class="info-title">⚡ Pro ?pu?lar?</h3>
+                    <ul class="info-list">
+                        <li>M??terilerinizin en ?ok sorduğu sorular? ekleyin</li>
+                        <li>Cevaplar net, k?sa ve anla??l?r olmal?</li>
+                        <li>Teknik terimleri a??klayarak kullan?n</li>
+                        <li>Sorular soru i?areti ile bitmelidir</li>
+                    </ul>
+                </div>
+
+                <!-- Actions -->
+                <div class="form-actions">
+                    <a asp-controller="Question" asp-action="Index" class="btn btn-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        <span>?ptal</span>
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Kaydet</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Preview Column -->
+            <div class="preview-column">
+                <div class="preview-wrapper">
+                    <div class="preview-label">◉ Canl? ?nizleme ◉</div>
+                    <div class="faq-preview">
+                        <div class="faq-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="preview-title" id="previewTitle">Soru Ba?l?ğ??</h3>
+                        <p class="preview-description" id="previewDescription">Sorunun cevab? burada g?r?necek...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <script src="~/js/views/Question/Create.js" asp-append-version="true"></script>
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+

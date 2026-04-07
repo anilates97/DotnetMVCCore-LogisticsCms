@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using LogisticsCMS.Services.ProjectSectionService;
+using LogisticsCMS.Services.ProjectSection;
 
 namespace LogisticsCMS.ViewComponents.DefaultComponents
 {

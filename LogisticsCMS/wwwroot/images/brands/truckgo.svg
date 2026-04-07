@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="120" viewBox="0 0 320 120" fill="none">
+  <rect width="320" height="120" rx="24" fill="#F8FCFF"/>
+  <text x="36" y="63" fill="#213E73" font-family="Manrope, Arial, sans-serif" font-size="34" font-weight="900">TRUCK</text>
+  <text x="165" y="63" fill="#213E73" font-family="Manrope, Arial, sans-serif" font-size="22" font-weight="800">go</text>
+  <path d="M236 58H276C284 58 290 64 290 72V76H286C284 82 279 86 273 86C267 86 262 82 260 76H238C236 82 231 86 225 86C219 86 214 82 212 76H206V48H238L250 34H270L286 48H292V58H286" fill="#243B7B"/>
+  <path d="M246 41H265L274 50H239L246 41Z" fill="#F7B933"/>
+  <circle cx="225" cy="76" r="8" fill="#F7B933"/>
+  <circle cx="273" cy="76" r="8" fill="#F7B933"/>
+  <path d="M214 26C234 20 252 20 271 26" stroke="#F7B933" stroke-width="4" stroke-linecap="round"/>
+</svg>

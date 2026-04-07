@@ -1,20 +1,107 @@
 <script src="/templates/assets/js/vendors/modernizr-3.6.0.min.js"></script>
-    <script src="/templates/assets/js/vendors/jquery-3.6.0.min.js"></script>
-    <script src="/templates/assets/js/vendors/jquery-migrate-3.3.0.min.js"></script>
-    <script src="/templates/assets/js/vendors/bootstrap.bundle.min.js"></script>
-    <script src="/templates/assets/js/vendors/waypoints.js"></script>
-    <script src="/templates/assets/js/vendors/wow.js"></script>
-    <script src="/templates/assets/js/vendors/magnific-popup.js"></script>
-    <script src="/templates/assets/js/vendors/perfect-scrollbar.min.js"></script>
-    <script src="/templates/assets/js/vendors/select2.min.js"></script>
-    <script src="/templates/assets/js/vendors/isotope.js"></script>
-    <script src="/templates/assets/js/vendors/scrollup.js"></script>
-    <script src="/templates/assets/js/vendors/swiper-bundle.min.js"></script>
-    <script src="/templates/assets/js/vendors/noUISlider.js"></script>
-    <script src="/templates/assets/js/vendors/slider.js"></script>
-    <!-- Count down-->
-    <script src="/templates/assets/js/vendors/counterup.js"></script>
-    <script src="/templates/assets/js/vendors/jquery.countdown.min.js"></script>
-    <!-- Count down--><script src="/templates/assets/js/vendors/jquery.elevatezoom.js"></script>
+<script src="/templates/assets/js/vendors/jquery-3.6.0.min.js"></script>
+<script src="/templates/assets/js/vendors/jquery-migrate-3.3.0.min.js"></script>
+<script src="/templates/assets/js/vendors/bootstrap.bundle.min.js"></script>
+<script src="/templates/assets/js/vendors/waypoints.js"></script>
+<script src="/templates/assets/js/vendors/wow.js"></script>
+<script src="/templates/assets/js/vendors/magnific-popup.js"></script>
+<script src="/templates/assets/js/vendors/perfect-scrollbar.min.js"></script>
+<script src="/templates/assets/js/vendors/select2.min.js"></script>
+<script src="/templates/assets/js/vendors/isotope.js"></script>
+<script src="/templates/assets/js/vendors/scrollup.js"></script>
+<script src="/templates/assets/js/vendors/swiper-bundle.min.js"></script>
+<script src="/templates/assets/js/vendors/noUISlider.js"></script>
+<script src="/templates/assets/js/vendors/slider.js"></script>
+<script src="/templates/assets/js/vendors/counterup.js"></script>
+<script src="/templates/assets/js/vendors/jquery.countdown.min.js"></script>
+<script src="/templates/assets/js/vendors/jquery.elevatezoom.js"></script>
 <script src="/templates/assets/js/vendors/slick.js"></script>
-    <script src="/templates/assets/js/main.js?v=3.0.0"></script>
+<script src="/templates/assets/js/main.js?v=3.0.0"></script>
+
+<script>
+// Scroll-to-top
+const scrollBtn = document.getElementById('scrollTopBtn');
+if (scrollBtn) {
+    window.addEventListener('scroll', () => {
+        scrollBtn.classList.toggle('visible', window.scrollY > 400);
+    });
+    scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
+
+// Smooth scroll anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+// Homepage hero slider
+if (window.Swiper) {
+    const heroSliderElement = document.querySelector('.swiper-banner-1');
+    const heroSlideCount = document.querySelectorAll('.swiper-banner-1 .swiper-slide').length;
+    const brandSliderElement = document.querySelector('.brands-swiper');
+    const brandSlideCount = document.querySelectorAll('.brands-swiper .swiper-slide').length;
+
+    if (heroSliderElement && heroSlideCount > 0) {
+        if (heroSliderElement.swiper) {
+            heroSliderElement.swiper.destroy(true, true);
+        }
+
+        new Swiper('.swiper-banner-1', {
+            slidesPerView: 1,
+            loop: heroSlideCount > 1,
+            speed: 900,
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+            pagination: {
+                el: '.swiper-pagination-banner',
+                clickable: true
+            },
+            autoplay: heroSlideCount > 1 ? {
+                delay: 5000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true
+            } : false
+        });
+    }
+
+    if (brandSliderElement && brandSlideCount > 0) {
+        if (brandSliderElement.swiper) {
+            brandSliderElement.swiper.destroy(true, true);
+        }
+
+        new Swiper('.brands-swiper', {
+            slidesPerView: 2,
+            spaceBetween: 18,
+            loop: brandSlideCount > 4,
+            speed: 800,
+            allowTouchMove: true,
+            autoplay: brandSlideCount > 1 ? {
+                delay: 2200,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true
+            } : false,
+            breakpoints: {
+                576: {
+                    slidesPerView: 2.4
+                },
+                768: {
+                    slidesPerView: 3.2
+                },
+                992: {
+                    slidesPerView: 4
+                },
+                1200: {
+                    slidesPerView: 5
+                }
+            }
+        });
+    }
+}
+</script>

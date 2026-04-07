@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using LogisticsCMS.Services.BrandService;
+using LogisticsCMS.Services.Brand;
 
 namespace LogisticsCMS.ViewComponents.DefaultComponents
 {

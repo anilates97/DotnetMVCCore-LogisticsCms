@@ -1,104 +1,235 @@
- <header class="header sticky-bar">
-      <div class="container">
-        <div class="main-header">
-          <div class="header-left">
-            <div class="header-logo"><a class="d-flex" href="index.html"><img alt="Ecom" src="/templates/assets/imgs/template/logo.svg"></a></div>
-            <div class="header-nav">
-              <nav class="nav-main-menu d-none d-xl-block">
-                <ul class="main-menu">
-                  <li class="has-children"><a class="active" href="index.html">Ana Sayfa</a>
+<!-- Header -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a class="header-logo" asp-controller="Default" asp-action="Index">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="36" height="36" rx="8" fill="#0ea5a1" />
+        <path d="M10 26V14l8-6 8 6v12H10z" fill="#0f2b4a" stroke="#0f2b4a" stroke-width="1.5" />
+        <path d="M16 26v-6h4v6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" />
+      </svg>
+      LojiS
+    </a>
 
-                  </li>
-                  <li><a href="about.html">Hakkımızda</a></li>
-                  <li class="has-children"><a href="#">Hizmetler</a>
-                    <div class="sub-menu five-col">
-                      <div class="menu-col">
-                        <h6 class="color-brand-2 mb-15">Deniz Taşımacılığı</h6>
-                        <div class="menu-image"><img src="/templates/assets/imgs/page/homepage1/menu1.png" alt="transp"></div>
-                        <ul class="megamenu">
-                          <li><a href="services.html">Container Shipping</a></li>
-                          <li><a href="services.html">Bulk Shipping</a></li>
-                          <li><a href="services.html">Roll-on/Roll-off Shipping</a></li>
-                          <li><a href="services.html">Break Bulk Shipping</a></li>
-                          <li><a href="services.html">Project Cargo Shipping</a></li>
-                        </ul>
-                      </div>
-                      <div class="menu-col">
-                        <h6 class="color-brand-2 mb-15">Hava Taşımacılığı</h6>
-                        <div class="menu-image"><img src="/templates/assets/imgs/page/homepage1/menu2.png" alt="transp"></div>
-                        <ul class="megamenu">
-                          <li><a href="services.html">General Cargo</a></li>
-                          <li><a href="services.html">Express Shipping</a></li>
-                          <li><a href="services.html">Dangerous Goods</a></li>
-                          <li><a href="services.html">Oversized Cargo</a></li>
-                          <li><a href="services.html">Perishable Goods</a></li>
-                        </ul>
-                      </div>
-                      <div class="menu-col">
-                        <h6 class="color-brand-2 mb-15">Kara Yolu Taşımacılığı</h6>
-                        <div class="menu-image"><img src="/templates/assets/imgs/page/homepage1/menu3.png" alt="transp"></div>
-                        <ul class="megamenu">
-                          <li><a href="services.html">Road Freight</a></li>
-                          <li><a href="services.html">Rail Freight</a></li>
-                          <li><a href="services.html">Intermodal Transportation</a></li>
-                          <li><a href="services.html">Less-than-Truckload (LTL) Shipping</a></li>
-                          <li><a href="services.html">Specialized Transportation</a></li>
-                        </ul>
-                      </div>
-                      <div class="menu-col">
-                        <h6 class="color-brand-2 mb-15">Raylı Sistem Taşımacılığı</h6>
-                        <div class="menu-image"><img src="/templates/assets/imgs/page/homepage1/menu4.png" alt="transp"></div>
-                        <ul class="megamenu">
-                          <li><a href="services.html">Rail Freight Transportation</a></li>
-                          <li><a href="services.html">Rail Terminal Services</a></li>
-                          <li><a href="services.html">Rail Freight Forwarding</a></li>
-                          <li><a href="services.html">Intermodal Transportation</a></li>
-                          <li><a href="services.html">Rail Logistics Consulting</a></li>
-                        </ul>
-                      </div>
-                      <div class="menu-col">
-                        <h6 class="color-brand-2 mb-15">Depo Taşımacılığı</h6>
-                        <div class="menu-image"><img src="/templates/assets/imgs/page/homepage1/menu5.png" alt="transp"></div>
-                        <ul class="megamenu">
-                          <li><a href="services.html">Warehousing</a></li>
-                          <li><a href="services.html">Distribution Center Operations</a></li>
-                          <li><a href="services.html">E-Commerce Fulfillment</a></li>
-                          <li><a href="services.html">Reverse Logistics</a></li>
-                          <li><a href="services.html">Inventory Management</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  
-                  <li class="has-children"><a href="blog.html">Ekibimiz</a>
-                  </li>
-                  <li><a href="contact.html">İletişim</a></li>
-                </ul>
-              </nav>
-              <div class="burger-icon burger-icon-white"><span class="burger-icon-top"></span><span class="burger-icon-mid"></span><span class="burger-icon-bottom"></span></div>
+    <nav>
+      <ul class="main-nav">
+        <li><a href="#top" data-nav-link="top">Ana Sayfa</a></li>
+        
+        <li class="has-mega">
+          <a href="#services" data-nav-link="services">Hizmetler</a>
+          <div class="mega-dropdown">
+            <div class="mega-group">
+              <h6>Deniz Taşımacılığı</h6>
+              <ul class="megamenu">
+                <li><span class="menu-text">Konteyner Taşımacılığı</span></li>
+                <li><span class="menu-text">Dökme Yük Taşımacılığı</span></li>
+                <li><span class="menu-text">Ro-Ro Taşımacılığı</span></li>
+                <li><span class="menu-text">Parça Yük Taşımacılığı</span></li>
+              </ul>
             </div>
-            <div class="header-right">
-              <div class="d-inline-block box-dropdown-cart"><span class="font-lg icon-list icon-account"><span class="font-sm color-grey-900 arrow-down"> 
-                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"></path>
-                    </svg>English</span></span>
-                <div class="dropdown-account">
-                  <ul>
-                    <li><a class="font-md" href="#"><img src="/templates/assets/imgs/template/icons/en.png" alt="transp">
-                        English</a></li>
-                    <li><a class="font-md" href="#"><img src="/templates/assets/imgs/template/icons/fr.png" alt="transp">
-                        French</a></li>
-                    <li><a class="font-md" href="#"><img src="assets/imgs/template/icons/cn.png" alt="transp">
-                        Chiness</a></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="d-none d-sm-inline-block"><a class="btn btn-default mr-10 hover-up" href="login.html">Login</a><a class="btn btn-brand-1 d-none d-xl-inline-block hover-up" href="request-a-quote.html">
-                  <svg fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"> </path>
-                  </svg>Kargo Takip</a></div>
+            <div class="mega-group">
+              <h6>Hava Taşımacılığı</h6>
+              <ul class="megamenu">
+                <li><span class="menu-text">Genel Kargo</span></li>
+                <li><span class="menu-text">Ekspres Taşımacılık</span></li>
+                <li><span class="menu-text">Tehlikeli Madde Taşımacılığı</span></li>
+                <li><span class="menu-text">Gabari Dışı Yük</span></li>
+              </ul>
+            </div>
+            <div class="mega-group">
+              <h6>Kara Yolu ve Depolama</h6>
+              <ul class="megamenu">
+                <li><span class="menu-text">Kara Yolu Yük Taşımacılığı</span></li>
+                <li><span class="menu-text">İntermodal Taşımacılık</span></li>
+                <li><span class="menu-text">E-Ticaret Operasyonları</span></li>
+                <li><span class="menu-text">Depolama Çözümleri</span></li>
+              </ul>
             </div>
           </div>
-        </div>
-      </div>
-    </header>
+        </li>
+        <li><a href="#about" data-nav-link="about">Hakkımızda</a></li>
+        <li><a href="#contact" data-nav-link="contact">İletişim</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a class="btn-nav-login" asp-controller="Account" asp-action="Login">Giriş</a>
+      <a class="btn-nav-track" asp-controller="Tracking" asp-action="Index">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" /><rect x="2" y="6" width="20" height="14" rx="2" /><path d="M10 10h4m-4 4h4" /><path d="M16 2v4M16 2H12M16 2h4" /></svg>
+        Kargo Takip
+      </a>
+    </div>
+
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <div class="container">
+    <ul>
+      <li><a href="#top" data-nav-link="top">Ana Sayfa</a></li>
+      <li><a href="#about" data-nav-link="about">Hakkımızda</a></li>
+      <li><a href="#services" data-nav-link="services">Hizmetler</a></li>
+      <li><a asp-controller="Tracking" asp-action="Index">Kargo Takip</a></li>
+      <li><a href="#faq">SSS</a></li>
+      <li><a href="#contact" data-nav-link="contact">İletişim</a></li>
+      <li><a asp-controller="Account" asp-action="Login">Giriş Yap</a></li>
+    </ul>
+    <div class="mobile-nav-actions">
+      <a class="btn-primary" asp-controller="Tracking" asp-action="Index">Kargo Takip</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const header = document.getElementById('siteHeader');
+  const mobileToggle = document.getElementById('mobileToggle');
+  const mobileNav = document.getElementById('mobileNav');
+  const sectionIds = ['top', 'about', 'services', 'contact'];
+  const navLinks = Array.from(document.querySelectorAll('[data-nav-link]'));
+  let pendingTargetId = null;
+  let currentActiveSectionId = 'top';
+  let isProgrammaticScroll = false;
+  let programmaticScrollTimeoutId = null;
+
+  function updateHeaderState() {
+    if (header) {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    }
+  }
+
+  function closeMobileNav() {
+    mobileToggle.classList.remove('active');
+    mobileNav.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function setActiveLink(sectionId) {
+    currentActiveSectionId = sectionId;
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.dataset.navLink === sectionId);
+    });
+  }
+
+  function getScrollOffset() {
+    return (header ? header.offsetHeight : 0) + 120;
+  }
+
+  function releasePendingNavigation() {
+    pendingTargetId = null;
+    isProgrammaticScroll = false;
+
+    if (programmaticScrollTimeoutId) {
+      window.clearTimeout(programmaticScrollTimeoutId);
+      programmaticScrollTimeoutId = null;
+    }
+  }
+
+  function resolveActiveSection() {
+    const sections = sectionIds
+      .map(id => document.getElementById(id))
+      .filter(Boolean)
+      .sort((a, b) => a.offsetTop - b.offsetTop);
+
+    if (sections.length === 0) {
+      setActiveLink('top');
+      return;
+    }
+
+    const offset = getScrollOffset();
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+    if (pendingTargetId) {
+      const pendingSection = document.getElementById(pendingTargetId);
+
+      if (pendingSection) {
+        const pendingTrigger = pendingSection.querySelector('[data-nav-trigger]') || pendingSection;
+        const pendingRect = pendingTrigger.getBoundingClientRect();
+        const targetReached = pendingRect.top >= offset && pendingRect.top <= Math.max(offset + 24, viewportHeight * 0.45);
+
+        if (!targetReached) {
+          setActiveLink(pendingTargetId);
+          return;
+        }
+      }
+
+      pendingTargetId = null;
+    }
+
+    const visibleTriggeredSection = sections.find(section => {
+      const trigger = section.querySelector('[data-nav-trigger]') || section;
+      const rect = trigger.getBoundingClientRect();
+      return rect.top >= offset && rect.top <= viewportHeight - 80;
+    });
+
+    if (visibleTriggeredSection) {
+      setActiveLink(visibleTriggeredSection.id);
+      return;
+    }
+
+    if (window.scrollY <= 16 && currentActiveSectionId !== 'top') {
+      setActiveLink('top');
+    }
+  }
+
+  updateHeaderState();
+  resolveActiveSection();
+
+  window.addEventListener('scroll', () => {
+    updateHeaderState();
+    resolveActiveSection();
+  }, { passive: true });
+
+  window.addEventListener('resize', resolveActiveSection);
+
+  ['wheel', 'touchstart'].forEach(eventName => {
+    window.addEventListener(eventName, () => {
+      if (isProgrammaticScroll) {
+        releasePendingNavigation();
+        resolveActiveSection();
+      }
+    }, { passive: true });
+  });
+
+  window.addEventListener('keydown', event => {
+    const scrollKeys = ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', 'Space'];
+    if (isProgrammaticScroll && scrollKeys.includes(event.code)) {
+      releasePendingNavigation();
+      resolveActiveSection();
+    }
+  });
+
+  if (mobileToggle && mobileNav) {
+    mobileToggle.addEventListener('click', () => {
+      mobileToggle.classList.toggle('active');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMobileNav);
+    });
+  }
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      const targetId = link.dataset.navLink;
+      if (targetId) {
+        isProgrammaticScroll = true;
+        pendingTargetId = targetId;
+        setActiveLink(targetId);
+
+        if (programmaticScrollTimeoutId) {
+          window.clearTimeout(programmaticScrollTimeoutId);
+        }
+
+        programmaticScrollTimeoutId = window.setTimeout(() => {
+          releasePendingNavigation();
+          resolveActiveSection();
+        }, 1200);
+      }
+    });
+  });
+</script>

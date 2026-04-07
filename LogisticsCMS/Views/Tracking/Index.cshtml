@@ -1,0 +1,329 @@
+@{
+    Layout = null;
+}
+
+@model TrackingResultViewModel
+@{
+    ViewData["Title"] = "Kargo Takip";
+
+    // Progress adım etiketleri ve ikonları
+    var steps = new[]
+    {
+        new { Label = "Alındı",          Icon = "bi-box-seam"          },
+        new { Label = "Transfer",         Icon = "bi-building"          },
+        new { Label = "Yolda",            Icon = "bi-truck"             },
+        new { Label = "Dağıtımda",        Icon = "bi-geo-alt"           },
+        new { Label = "Teslim Edildi",    Icon = "bi-check-circle-fill" }
+    };
+
+    int currentStep = Model?.CurrentStepIndex ?? -1;
+    double fillPercent = currentStep < 0 ? 0 : (currentStep / 4.0) * 100;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kargo Takip - Transp Lojistik</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="~/css/views/Tracking/Index.css" asp-append-version="true" />
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-content">
+                <div class="contact-info">
+                    <a href="tel:+905004003020" class="contact-item">
+                        <i class="bi bi-telephone-fill"></i>
+                        <span>+90 (500) 400 30 20</span>
+                    </a>
+                    <a href="mailto:iletisim@transportation.com" class="contact-item">
+                        <i class="bi bi-envelope-fill"></i>
+                        <span>iletisim@transportation.com</span>
+                    </a>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="bi bi-twitter"></i></a>
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+            <a asp-controller="Home" asp-action="Index" class="logo">
+                    <div class="logo-icon"></div>
+                    <span>Transp</span>
+                </a>
+                <ul class="nav-menu">
+                        <li><a asp-controller="Default" asp-action="Index" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="#" class="nav-link">Hakkımızda</a></li>
+                    <li><a href="#" class="nav-link">Hizmetlerimiz</a></li>
+                    <li><a href="#" class="nav-link">Ekibimiz</a></li>
+                    <li><a href="#" class="nav-link">Bize Yazın</a></li>
+                </ul>
+                <div class="header-actions">
+                    <a href="@Url.Action("Index", "Tracking")" class="btn-tracking">
+                        <i class="bi bi-box-seam"></i>
+                        Kargo Takip
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="breadcrumb-custom">
+                    <a asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                    <span>/</span>
+                    <span>Kargo Takip</span>
+                </div>
+                <h1 class="hero-title">Kargo Takip Sistemi</h1>
+                <p class="hero-subtitle">Gönderinizin anlık konumunu ve durumunu kolayca takip edin. Hızlı, güvenli ve şeffaf teslimat süreci.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tracking Section -->
+    <section class="tracking-section">
+        <div class="container">
+
+            <!-- Arama Kartı -->
+            <div class="tracking-card">
+                <div class="tracking-header">
+                    <div class="tracking-icon">
+                        <i class="bi bi-search"></i>
+                    </div>
+                    <div class="tracking-title">
+                        <h2>Kargo Sorgulama</h2>
+                        <p>Takip numaranızı girerek kargonuzun durumunu öğrenin</p>
+                    </div>
+                </div>
+
+                <form method="get" action="@Url.Action("Index", "Tracking")" id="trackingSearchForm" novalidate>
+                    <div class="search-container">
+                        <div class="search-input-wrapper">
+                            <i class="bi bi-box-seam search-icon"></i>
+                            <input
+                                type="text"
+                                name="trackingNumber"
+                                id="trackingInput"
+                                class="search-input"
+                                placeholder="Takip numaranızı girin (örn: TRK-1001ABC)"
+                                value="@Context.Request.Query["trackingNumber"]"
+                                autocomplete="off"
+                                required
+                                aria-describedby="trackingWarning"
+                            />
+                        </div>
+                        <button type="submit" class="btn-search">
+                            <i class="bi bi-search"></i>
+                            <span>Kargomu Sorgula</span>
+                        </button>
+                    </div>
+                    <div id="trackingWarning" class="tracking-warning" role="alert" aria-live="polite"></div>
+                </form>
+            </div>
+
+            @* Kayıt bulunamadı *@
+            @if (ViewBag.NotFound == true)
+            {
+                <div class="not-found-card">
+                    <i class="bi bi-box-seam"></i>
+                    <h3>Kargo Bulunamadı</h3>
+                    <p>
+                        <strong>@ViewBag.SearchedNumber</strong> numaralı kargoya ait kayıt sistemimizde bulunmamaktadır.<br>
+                        Lütfen takip numaranızı kontrol ederek tekrar deneyin.
+                    </p>
+                </div>
+            }
+
+            @* Sonuçlar *@
+            @if (Model != null)
+            {
+                <!-- Durum Başlığı -->
+                <div class="results-header">
+                    <div class="tracking-info">
+                        <h3>Takip Numarası</h3>
+                        <div class="tracking-number-display">@Model.TrackingNumber</div>
+                    </div>
+                    <div class="delivery-status">
+                        <div class="status-badge">
+                            @if (Model.IsDelivered)
+                            {
+                                <i class="bi bi-check-circle-fill"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-truck"></i>
+                            }
+                            @Model.CurrentStatus
+                        </div>
+                        <div class="estimated-delivery">
+                            Oluşturma: @Model.CreatedDate.ToString("dd MMMM yyyy, HH:mm", new System.Globalization.CultureInfo("tr-TR"))
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kargo Bilgileri -->
+                <div class="info-grid mb-4">
+                    <div class="info-card">
+                        <div class="info-card-label">Gönderici</div>
+                        <div class="info-card-value">@Model.SenderName</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-label">Alıcı</div>
+                        <div class="info-card-value">@Model.ReceiverName</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-label">Çıkış</div>
+                        <div class="info-card-value">@Model.OriginCity / @Model.OriginDistrict</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-label">Teslimat</div>
+                        <div class="info-card-value">@Model.DestinationCity / @Model.DestinationDistrict</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-label">Adres</div>
+                        <div class="info-card-value">@Model.Address</div>
+                    </div>
+                </div>
+
+                <!-- Progress Adımları -->
+                <div class="progress-container">
+                    <div class="progress-steps">
+                        <div class="progress-line">
+                            <div class="progress-line-fill" style="width: @fillPercent.ToString("0", System.Globalization.CultureInfo.InvariantCulture)%"></div>
+                        </div>
+                        @for (int i = 0; i < steps.Length; i++)
+                        {
+                            string stepClass = i < currentStep ? "completed" : (i == currentStep ? "active" : "");
+                            <div class="progress-step @stepClass">
+                                <div class="step-circle">
+                                    <i class="bi @steps[i].Icon"></i>
+                                </div>
+                                <div class="step-label">@steps[i].Label</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Timeline -->
+                <div class="timeline-container">
+                    <div class="timeline-header">
+                        <h3><i class="bi bi-clock-history"></i> Kargo Hareketleri</h3>
+                    </div>
+
+                    @if (Model.Events.Any())
+                    {
+                        <div class="timeline">
+                            @for (int i = 0; i < Model.Events.Count; i++)
+                            {
+                                var ev = Model.Events[i];
+                                <div class="timeline-item" style="animation-delay: @(i * 0.1)s">
+                                    <div class="timeline-marker @ev.MarkerClass">
+                                        <i class="bi @ev.IconClass"></i>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-date">
+                                            <i class="bi bi-calendar3"></i>
+                                            @ev.EventDate.ToString("dd MMMM yyyy, HH:mm", new System.Globalization.CultureInfo("tr-TR"))
+                                        </div>
+                                        <div class="timeline-title">@ev.TrackingStatus</div>
+                                        <div class="timeline-location">
+                                            <i class="bi bi-geo-alt-fill"></i>
+                                            @ev.Location
+                                        </div>
+                                        @if (!string.IsNullOrWhiteSpace(ev.Description))
+                                        {
+                                            <div class="timeline-description">@ev.Description</div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted text-center py-4">Henüz hareket kaydı bulunmamaktadır.</p>
+                    }
+                </div>
+
+                <!-- Destek -->
+                <div class="support-section">
+                    <h4>Kargonuzla ilgili bir sorun mu var?</h4>
+                    <div class="support-links">
+                        <a href="tel:+905004003020" class="support-link">
+                            <i class="bi bi-headset"></i>
+                            Müşteri Hizmetleri
+                        </a>
+                        <a href="https://wa.me/905004003020" class="support-link" target="_blank">
+                            <i class="bi bi-whatsapp"></i>
+                            WhatsApp Destek
+                        </a>
+                        <a href="#" class="support-link">
+                            <i class="bi bi-chat-dots"></i>
+                            Canlı Destek
+                        </a>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (() => {
+            const form = document.getElementById("trackingSearchForm");
+            const input = document.getElementById("trackingInput");
+            const warning = document.getElementById("trackingWarning");
+
+            if (!form || !input || !warning) {
+                return;
+            }
+
+            const clearWarning = () => {
+                warning.textContent = "";
+                warning.classList.remove("is-visible");
+                input.classList.remove("input-error");
+            };
+
+            form.addEventListener("submit", (event) => {
+                const trimmedValue = input.value.trim();
+
+                if (!trimmedValue) {
+                    event.preventDefault();
+                    warning.textContent = "Lütfen takip numarası girin.";
+                    warning.classList.add("is-visible");
+                    input.classList.add("input-error");
+                    input.focus();
+                    return;
+                }
+
+                input.value = trimmedValue.toUpperCase();
+                clearWarning();
+            });
+
+            input.addEventListener("input", () => {
+                if (input.value.trim()) {
+                    clearWarning();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
+

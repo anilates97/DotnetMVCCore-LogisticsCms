@@ -1,26 +1,33 @@
 @model List<ResultBrandDto>
-<div class="section bg-2 pt-65 pb-35">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-lg-3 mb-30 text-center text-lg-start">
-              <p class="font-2xl-bold color-brand-2">We are<span class="color-brand-1">trusted</span>by major global brands</p>
-            </div>
-            <div class="col-lg-9 mb-30">
-              <div class="box-swiper">
-                <div class="swiper-container swiper-group-6 pb-0">
-                  <div class="swiper-wrapper">
-                   @if (Model.Count == 0)
-                   {
-                     <p>Marka bulunumadı</p> 
-                      }
-                      @foreach (var brand in Model){
-                     <div class="swiper-slide"><img src="@brand.ImageUrl" alt="@brand.BrandName"></div>
-                   }
-                    
+
+<!-- Brands -->
+<section class="brands-section" id="brands">
+  <div class="container">
+    <div class="brands-inner">
+      <span class="brands-label">Güvenilir İş Ortaklarımız</span>
+      <div class="brands-slider-shell">
+        @if (Model != null && Model.Any())
+        {
+          <div class="box-swiper">
+            <div class="swiper-container brands-swiper">
+              <div class="swiper-wrapper">
+                @foreach (var brand in Model)
+                {
+                  <div class="swiper-slide">
+                    <a href="#" class="brand-logo-link" aria-label="@brand.BrandName">
+                      <img src="@brand.ImageUrl" alt="@brand.BrandName">
+                    </a>
                   </div>
-                </div>
+                }
               </div>
             </div>
           </div>
-        </div>
+        }
+        else
+        {
+          <span class="text-muted font-sm">Henüz marka eklenmedi</span>
+        }
       </div>
+    </div>
+  </div>
+</section>

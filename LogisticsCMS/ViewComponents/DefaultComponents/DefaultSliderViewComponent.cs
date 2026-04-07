@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using LogisticsCMS.Services.SliderService;
+using LogisticsCMS.Services.Slider;
 
 namespace LogisticsCMS.ViewComponents.DefaultComponents
 {

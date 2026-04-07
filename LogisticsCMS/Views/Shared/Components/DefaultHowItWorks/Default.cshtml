@@ -1,49 +1,44 @@
-﻿@model List<LogisticsCMS.Dtos.HowItWorkDtos.ResultHowItWorkDto>
+@model List<LogisticsCMS.Dtos.HowItWork.ResultHowItWorkDto>
 
 @if (Model != null && Model.Any())
 {
-    var featuredStep = Model.First();
+  var featuredStep = Model.First();
 
-    <section class="section pt-85 bg-worldmap">
-        <div class="container">
-            <div class="text-center">
-                <img class="mb-15" src="/templates/assets/imgs/template/icons/favicon.svg" alt="transp">
-                <h2 class="color-brand-2 mb-20">How It Works</h2>
-                <p class="font-md color-grey-700">@featuredStep.Description</p>
-            </div>
-            <div class="row mt-50">
-                <div class="col-lg-6 mb-30">
-                    <div class="box-image-how">
-                        <img class="w-100" src="@featuredStep.ImageUrl" alt="@featuredStep.Title">
-                        <div class="box-info-bottom-img">
-                            <div class="image-play"><img class="mb-15" src="/templates/assets/imgs/template/icons/play.svg" alt="transp"></div>
-                            <div class="info-play">
-                                <h4 class="color-white mb-15">@featuredStep.Title</h4>
-                                <p class="font-sm color-white">@featuredStep.Description</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 mb-30">
-                    <ul class="list-how-works">
-                        @foreach (var step in Model)
-                        {
-                            <li>
-                                <div class="image-how">
-                                    <span class="img">
-                                        <img src="@step.ImageUrl" alt="@step.Title">
-                                    </span>
-                                </div>
-                                <div class="info-how">
-                                    <h5 class="color-brand-2">@step.Title</h5>
-                                    <p class="font-md color-grey-700">@step.Description</p>
-                                </div>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
+  <section class="how-section section-padding" id="how-it-works">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-badge">Nasıl Çalışır?</span>
+        <h2 class="section-title">Sipariş Süreci Adım Adım</h2>
+        <p class="section-subtitle">Müşteri ihtiyaçları analiz edilir, taşıma türü belirlenir ve sevkiyat için en uygun operasyon planı hazırlanır.</p>
+      </div>
+
+      <div class="how-grid">
+        <div class="how-visual-card">
+          <div class="how-visual-glow"></div>
+          <div class="how-image-main">
+            <img src="@featuredStep.ImageUrl" alt="Lojistik operasyon görseli" loading="lazy">
+          </div>
+          <div class="how-visual-badge">
+            <span class="how-visual-badge-label">Operasyon Akışı</span>
+            <strong>Planlama, hazırlık ve teslimat tek akışta yönetilir</strong>
+          </div>
         </div>
-    </section>
-}
 
+        <ul class="how-steps stagger">
+          @foreach (var step in Model)
+          {
+            <li class="how-step">
+              <div class="how-step-img">
+                <img src="@step.ImageUrl" alt="@step.Title" loading="lazy">
+              </div>
+              <div class="how-step-body">
+                <h5>@step.Title</h5>
+                <p>@step.Description</p>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+}

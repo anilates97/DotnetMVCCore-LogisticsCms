@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="120" viewBox="0 0 320 120" fill="none">
+  <rect width="320" height="120" rx="24" fill="#F6FBFF"/>
+  <g transform="translate(34 28)">
+    <path d="M28 0L56 14V44L28 58L0 44V14L28 0Z" fill="#FDBA21"/>
+    <path d="M12 20L28 12L44 20L28 28L12 20Z" fill="#FFF2B8"/>
+    <path d="M12 34L28 26L44 34L28 42L12 34Z" fill="#FFD766"/>
+  </g>
+  <text x="108" y="56" fill="#173B63" font-family="Manrope, Arial, sans-serif" font-size="31" font-weight="800">ALEA</text>
+  <text x="109" y="80" fill="#6A8197" font-family="Manrope, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="2">PERFORMANCE GROUP</text>
+</svg>

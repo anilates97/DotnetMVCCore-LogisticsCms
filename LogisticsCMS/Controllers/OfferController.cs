@@ -1,77 +1,64 @@
-﻿namespace LogisticsCMS.Controllers
+using AutoMapper;
+using LogisticsCMS.Dtos.Offer;
+using LogisticsCMS.Services.Offer;
+using Microsoft.AspNetCore.Mvc;
+
+namespace LogisticsCMS.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
-    using LogisticsCMS.Dtos.OfferDtos;
-    using LogisticsCMS.Services.OfferService;
-
-    public class OfferController : Controller
+    public class OfferController : CrudControllerBase
     {
-        private readonly IOfferService _OfferService;
+        private readonly IOfferService _offerService;
+        private readonly IMapper _mapper;
 
-        public OfferController(IOfferService OfferService)
+        public OfferController(IOfferService offerService, IMapper mapper)
         {
-            _OfferService = OfferService;
+            _offerService = offerService;
+            _mapper = mapper;
         }
 
-        public async Task<IActionResult> OfferList()
+        public async Task<IActionResult> Index()
         {
-            var Offers = await _OfferService.GetAllOffersAsync();
-            return View(Offers);
+            var offers = await _offerService.GetAllOffersAsync();
+            return View(offers);
         }
 
         [HttpGet]
-        public IActionResult CreateOffer()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOffer(CreateOfferDto createOfferDto)
+        public async Task<IActionResult> Create(CreateOfferDto createOfferDto)
         {
-            if (ModelState.IsValid)
-            {
-                await _OfferService.CreateOfferAsync(createOfferDto);
-                return RedirectToAction(nameof(OfferList));
-            }
-            return View(createOfferDto);
+            return await SaveAndRedirectAsync(
+                createOfferDto,
+                dto => _offerService.CreateOfferAsync(dto)
+            );
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateOffer(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var Offer = await _OfferService.GetOfferByIdAsync(id);
-            if (Offer == null)
-            {
-                return NotFound();
-            }
-            var newOffer = new GetOfferByIdDto
-            {
-                OfferId = Offer.OfferId,
-                Title = Offer.Title,
-                Description = Offer.Description,
-                ImageUrl = Offer.ImageUrl,
-                IsStatus = Offer.IsStatus,
-            };
-            return View(newOffer);
+            return await LoadEditViewAsync(
+                () => _offerService.GetOfferByIdAsync(id),
+                offer => _mapper.Map<UpdateOfferDto>(offer)
+            );
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateOffer(UpdateOfferDto updateOfferDto)
+        public async Task<IActionResult> Edit(UpdateOfferDto updateOfferDto)
         {
-            if (ModelState.IsValid)
-            {
-                await _OfferService.UpdateOfferAsync(updateOfferDto);
-                return RedirectToAction(nameof(OfferList));
-            }
-            return View(updateOfferDto);
+            return await SaveAndRedirectAsync(
+                updateOfferDto,
+                dto => _offerService.UpdateOfferAsync(dto)
+            );
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteOffer(string id)
+        [AcceptVerbs("GET", "POST")]
+        public async Task<IActionResult> Delete(string id)
         {
-            await _OfferService.DeleteOfferAsync(id);
-            return RedirectToAction(nameof(OfferList));
+            return await DeleteAndRedirectAsync(() => _offerService.DeleteOfferAsync(id));
         }
     }
 }
-

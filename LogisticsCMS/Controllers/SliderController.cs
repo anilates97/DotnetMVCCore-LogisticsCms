@@ -1,77 +1,64 @@
-﻿namespace LogisticsCMS.Controllers
-{
-    using Microsoft.AspNetCore.Mvc;
-    using LogisticsCMS.Dtos.SliderDtos;
-    using LogisticsCMS.Services.SliderService;
+using AutoMapper;
+using LogisticsCMS.Dtos.Slider;
+using LogisticsCMS.Services.Slider;
+using Microsoft.AspNetCore.Mvc;
 
-    public class SliderController : Controller
+namespace LogisticsCMS.Controllers
+{
+    public class SliderController : CrudControllerBase
     {
         private readonly ISliderService _sliderService;
+        private readonly IMapper _mapper;
 
-        public SliderController(ISliderService sliderService)
+        public SliderController(ISliderService sliderService, IMapper mapper)
         {
             _sliderService = sliderService;
+            _mapper = mapper;
         }
 
-        public async Task<IActionResult> SliderList()
+        public async Task<IActionResult> Index()
         {
             var sliders = await _sliderService.GetAllSlidersAsync();
             return View(sliders);
         }
 
         [HttpGet]
-        public IActionResult CreateSlider()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSlider(CreateSliderDto createSliderDto)
+        public async Task<IActionResult> Create(CreateSliderDto createSliderDto)
         {
-            if (ModelState.IsValid)
-            {
-                await _sliderService.CreateSliderAsync(createSliderDto);
-                return RedirectToAction(nameof(SliderList));
-            }
-            return View(createSliderDto);
+            return await SaveAndRedirectAsync(
+                createSliderDto,
+                dto => _sliderService.CreateSliderAsync(dto)
+            );
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateSlider(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var slider = await _sliderService.GetSliderByIdAsync(id);
-            if (slider == null)
-            {
-                return NotFound();
-            }
-            var newSlider = new GetSliderByIdDto
-            {
-                SliderId = slider.SliderId,
-                Title = slider.Title,
-                Description = slider.Description,
-                ImageUrl = slider.ImageUrl,
-                SubTitle = slider.SubTitle,
-            };
-            return View(newSlider);
+            return await LoadEditViewAsync(
+                () => _sliderService.GetSliderByIdAsync(id),
+                slider => _mapper.Map<UpdateSliderDto>(slider)
+            );
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateSlider(UpdateSliderDto updateSliderDto)
+        public async Task<IActionResult> Edit(UpdateSliderDto updateSliderDto)
         {
-            if (ModelState.IsValid)
-            {
-                await _sliderService.UpdateSliderAsync(updateSliderDto);
-                return RedirectToAction(nameof(SliderList));
-            }
-            return View(updateSliderDto);
+            return await SaveAndRedirectAsync(
+                updateSliderDto,
+                dto => _sliderService.UpdateSliderAsync(dto)
+            );
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteSlider(string id)
+        [AcceptVerbs("GET", "POST")]
+        public async Task<IActionResult> Delete(string id)
         {
-            await _sliderService.DeleteSliderAsync(id);
-            return RedirectToAction(nameof(SliderList));
+            return await DeleteAndRedirectAsync(() => _sliderService.DeleteSliderAsync(id));
         }
     }
 }
-

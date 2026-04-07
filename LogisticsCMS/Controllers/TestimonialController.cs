@@ -1,94 +1,64 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using LogisticsCMS.Dtos.TestimonialDtos;
-using LogisticsCMS.Services.TestimonialService;
+using AutoMapper;
+using LogisticsCMS.Dtos.Testimonial;
+using LogisticsCMS.Services.Testimonial;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LogisticsCMS.Controllers
 {
-    public class TestimonialController : Controller
+    public class TestimonialController : CrudControllerBase
     {
         private readonly ITestimonialService _testimonialService;
+        private readonly IMapper _mapper;
 
-        public TestimonialController(ITestimonialService testimonialService)
+        public TestimonialController(ITestimonialService testimonialService, IMapper mapper)
         {
             _testimonialService = testimonialService;
+            _mapper = mapper;
         }
 
-        public async Task<IActionResult> TestimonialList()
+        public async Task<IActionResult> Index()
         {
             var values = await _testimonialService.GetAllTestimonialsAsync();
             return View(values);
         }
 
         [HttpGet]
-        public IActionResult CreateTestimonial()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTestimonial(
-            CreateTestimonialDto createTestimonialDto
-        )
+        public async Task<IActionResult> Create(CreateTestimonialDto createDto)
         {
-            if (ModelState.IsValid)
-            {
-                await _testimonialService.CreateTestimonialAsync(createTestimonialDto);
-                return RedirectToAction(nameof(TestimonialList));
-            }
-
-            return View(createTestimonialDto);
+            return await SaveAndRedirectAsync(
+                createDto,
+                dto => _testimonialService.CreateTestimonialAsync(dto)
+            );
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateTestimonial(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var value = await _testimonialService.GetTestimonialByIdAsync(id);
-            if (value == null)
-            {
-                return NotFound();
-            }
-
-            var updateDto = new UpdateTestimonialDto
-            {
-                TestimonialId = value.TestimonialId,
-                NameSurname = value.NameSurname,
-                Title = value.Title,
-                ImageUrl = value.ImageUrl,
-                ReviewDetails = value.ReviewDetails,
-                ReviewScore = value.ReviewScore,
-                Status = value.Status,
-            };
-
-            return View(updateDto);
+            return await LoadEditViewAsync(
+                () => _testimonialService.GetTestimonialByIdAsync(id),
+                value => _mapper.Map<UpdateTestimonialDto>(value)
+            );
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateTestimonial(
-            UpdateTestimonialDto updateTestimonialDto
-        )
+        public async Task<IActionResult> Edit(UpdateTestimonialDto updateDto)
         {
-            if (ModelState.IsValid)
-            {
-                await _testimonialService.UpdateTestimonialAsync(updateTestimonialDto);
-                return RedirectToAction(nameof(TestimonialList));
-            }
-
-            return View(updateTestimonialDto);
+            return await SaveAndRedirectAsync(
+                updateDto,
+                dto => _testimonialService.UpdateTestimonialAsync(dto)
+            );
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteTestimonial(string id)
+        [AcceptVerbs("GET", "POST")]
+        public async Task<IActionResult> Delete(string id)
         {
-            await _testimonialService.DeleteTestimonialAsync(id);
-            return RedirectToAction(nameof(TestimonialList));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> DeleteReview(string id)
-        {
-            await _testimonialService.DeleteTestimonialAsync(id);
-            return RedirectToAction(nameof(TestimonialList));
+            return await DeleteAndRedirectAsync(() => _testimonialService.DeleteTestimonialAsync(id));
         }
     }
 }
-

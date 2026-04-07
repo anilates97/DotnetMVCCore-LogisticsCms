@@ -1,0 +1,254 @@
+@model UpdateGetInTouchSectionDto
+@{
+    ViewData["Title"] = "UpdateGetInTouchSection";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/views/GetInTouchSection/Edit.css" asp-append-version="true" />
+}
+
+
+<div class="getintouch-create-container">
+    <!-- Header -->
+    <div class="page-header">
+        <div class="header-tag">SECTION MANAGEMENT</div>
+        <h1 class="page-title">
+            Get In Touch<br>Section
+        </h1>
+        <p class="page-subtitle">
+            İletişim bölümünüzü oluşturun ve yönetin. Müşterilerinize ulaşmaları için ilham verin.
+        </p>
+    </div>
+
+    <!-- Main Grid -->
+    <form method="post" id="getInTouchForm" asp-controller="GetInTouchSection" asp-action="Edit">
+        <div class="form-grid-layout">
+            <!-- Left Column - Form -->
+            <div class="form-column">
+                <input type="hidden" asp-for="GetInTouchSectionId" />
+<span asp-validation-for="GetInTouchSectionId" class="text-danger"></span>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <!-- Main Content Section -->
+                <div class="section-block" data-section="01 / MAIN CONTENT">
+                    <h2 class="block-title">Ana İçerik</h2>
+
+                    @* <div class="form-group">
+                        <label class="form-label" asp-for="BadgeTitle">
+                            Badge Başlık <span class="required-mark">*</span>
+                        </label>
+                        <input type="text" 
+                               class="form-input" 
+                               asp-for="BadgeTitle" 
+                               id="badgeInput"
+                               placeholder="Get in touch"
+                               maxlength="50"
+                               required />
+<span asp-validation-for="BadgeTitle" class="text-danger"></span>
+                        <div class="input-counter">
+                            <span id="badgeCounter">0</span>/50
+                        </div>
+                    </div> *@
+
+                    <div class="form-group">
+                        <label class="form-label" asp-for="MainTitle">
+                            Ana Başlık <span class="required-mark">*</span>
+                        </label>
+                        <input type="text" 
+                               class="form-input" 
+                               asp-for="MainTitle" 
+                               id="mainTitleInput"
+                               placeholder="Proud to Deliver Excellence Every Time"
+                               maxlength="100"
+                               required />
+<span asp-validation-for="MainTitle" class="text-danger"></span>
+                        <div class="input-counter">
+                            <span id="mainTitleCounter">0</span>/100
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Description">
+                            Açıklama <span class="required-mark">*</span>
+                        </label>
+                        <textarea class="form-textarea" 
+                                  asp-for="Description" 
+                                  id="descriptionInput"
+                                  placeholder="Paragraf metnini buraya yazın..."
+                                  maxlength="500"
+                                  required></textarea>
+<span asp-validation-for="Description" class="text-danger"></span>
+                        <div class="input-counter">
+                            <span id="descCounter">0</span>/500
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features Section -->
+                <div class="section-block" data-section="02 / FEATURES">
+                    <h2 class="block-title">Özellikler</h2>
+
+                    <div class="features-grid">
+                        <!-- Feature 1 -->
+                        <div class="feature-box" data-num="01">
+                            <div class="feature-label">Feature 1</div>
+                            <div class="form-group">
+                                <label class="form-label" asp-for="Feature1Title">
+                                    Başlık <span class="required-mark">*</span>
+                                </label>
+                                <input type="text" 
+                                       class="form-input" 
+                                       asp-for="Feature1Title" 
+                                       id="feature1TitleInput"
+                                       placeholder="Boost your sale"
+                                       maxlength="50"
+                                       required />
+<span asp-validation-for="Feature1Title" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" asp-for="Feature1Description">
+                                    Açıklama <span class="required-mark">*</span>
+                                </label>
+                                <textarea class="form-textarea" 
+                                          asp-for="Feature1Description" 
+                                          id="feature1DescInput"
+                                          placeholder="Açıklama..."
+                                          maxlength="200"
+                                          required></textarea>
+<span asp-validation-for="Feature1Description" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="feature-box" data-num="02">
+                            <div class="feature-label">Feature 2</div>
+                            <div class="form-group">
+                                <label class="form-label" asp-for="Feature2Title">
+                                    Başlık <span class="required-mark">*</span>
+                                </label>
+                                <input type="text" 
+                                       class="form-input" 
+                                       asp-for="Feature2Title" 
+                                       id="feature2TitleInput"
+                                       placeholder="Introducing New Features"
+                                       maxlength="50"
+                                       required />
+<span asp-validation-for="Feature2Title" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" asp-for="Feature2Description">
+                                    Açıklama <span class="required-mark">*</span>
+                                </label>
+                                <textarea class="form-textarea" 
+                                          asp-for="Feature2Description" 
+                                          id="feature2DescInput"
+                                          placeholder="Açıklama..."
+                                          maxlength="200"
+                                          required></textarea>
+<span asp-validation-for="Feature2Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image & Status Section -->
+                <div class="section-block" data-section="03 / MEDIA & STATUS">
+                    <h2 class="block-title">Görsel & Durum</h2>
+
+                    <div class="form-group">
+                        <label class="form-label" asp-for="ImageUrl">
+                            Görsel URL <span class="required-mark">*</span>
+                        </label>
+                        <input type="text" inputmode="url" 
+                               class="form-input" 
+                               asp-for="ImageUrl" 
+                               id="imageUrlInput"
+                               placeholder="https://example.com/image.jpg"
+                               required />
+<span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="status-toggle-wrapper">
+                        <div class="toggle-label-wrapper">
+                            <h4>Aktif Durum</h4>
+                            <p>Bölümü yayına al</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" asp-for="Status" id="statusToggle" checked />
+<span asp-validation-for="Status" class="text-danger"></span>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Info Panel -->
+                <div class="info-panel">
+                    <h3 class="info-title">Dikkat Edilmesi Gerekenler</h3>
+                    <ul class="info-list">
+                        <li>Badge başlık kısa ve öz olmalı (örn: "Get in touch")</li>
+                        <li>Ana başlık etkileyici ve güçlü olmalı</li>
+                        <li>Her feature için net ve anlaşılır açıklama yazın</li>
+                        <li>Görsel 1200x800 px veya daha büyük olmalı</li>
+                    </ul>
+                </div>
+
+                <!-- Actions -->
+                <div class="form-actions">
+                    <a asp-controller="GetInTouchSection" asp-action="Index" class="btn btn-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        İptal
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Güncelle
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column - Preview -->
+            <div class="preview-column">
+                <div class="preview-wrapper">
+                    <div class="preview-content">
+                        <div class="preview-badge" id="previewBadge">GET IN TOUCH</div>
+                        <h2 class="preview-main-title" id="previewMainTitle">Proud to Deliver Excellence Every Time</h2>
+                        <p class="preview-description" id="previewDescription">Açıklama metni burada görünecek...</p>
+                        
+                        <div class="preview-features">
+                            <div class="preview-feature-item">
+                                <h4 class="preview-feature-title" id="previewFeature1Title">Boost your sale</h4>
+                                <p class="preview-feature-desc" id="previewFeature1Desc">Açıklama...</p>
+                            </div>
+                            <div class="preview-feature-item">
+                                <h4 class="preview-feature-title" id="previewFeature2Title">Introducing New Features</h4>
+                                <p class="preview-feature-desc" id="previewFeature2Desc">Açıklama...</p>
+                            </div>
+                        </div>
+
+                        <div class="preview-image-container">
+                            <img src="" alt="Preview" id="previewImage" />
+                            <div class="preview-placeholder" id="previewPlaceholder">
+                                <div class="preview-placeholder-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <p>Görsel Önizleme</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/views/GetInTouchSection/Edit.js" asp-append-version="true"></script>
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

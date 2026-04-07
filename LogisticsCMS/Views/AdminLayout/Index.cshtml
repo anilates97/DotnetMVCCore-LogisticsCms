@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
-@await Component.InvokeAsync("AdminLayoutHead")
+<head>
+    @await Component.InvokeAsync("AdminLayoutHead")
+    @RenderSection("Styles", required: false)
+</head>
 
   
 <body data-menu-color="light" data-sidebar="default">

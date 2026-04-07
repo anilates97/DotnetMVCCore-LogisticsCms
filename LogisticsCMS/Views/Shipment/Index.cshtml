@@ -1,0 +1,265 @@
+@model List<ResultShipmentDto>
+@{
+    ViewData["Title"] = "Gönderi Listesi";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/views/Shipment/Index.css" asp-append-version="true" />
+}
+
+
+<div class="shipment-list-container">
+    <!-- Header -->
+    <div class="page-header">
+        <div class="header-left">
+            <div class="breadcrumb">
+                <a href="/Admin/Dashboard">
+                    <i class="bi bi-house-door"></i> Ana Sayfa
+                </a>
+                <i class="bi bi-chevron-right"></i>
+                <span>Gönderiler</span>
+            </div>
+            <h1 class="page-title">
+                <div class="title-icon">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+                Kargo Gönderi Yönetimi
+            </h1>
+            <p class="page-subtitle">Tüm kargo gönderilerini görüntüleyin ve yönetin</p>
+        </div>
+        <div class="header-actions">
+            <a asp-controller="Shipment" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i>
+                Yeni Gönderi
+            </a>
+            <button class="btn btn-icon" title="Filtreler">
+                <i class="bi bi-funnel"></i>
+            </button>
+            <button class="btn btn-icon" title="Dışa Aktar">
+                <i class="bi bi-download"></i>
+            </button>
+            <button class="btn btn-icon" title="Yenile" onclick="location.reload()">
+                <i class="bi bi-arrow-clockwise"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-header">
+                <div>
+                    <div class="stat-label">Toplam Gönderi</div>
+                    <div class="stat-value">@Model.Count</div>
+                </div>
+                <div class="stat-icon">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-header">
+                <div>
+                    <div class="stat-label">Teslim Edildi</div>
+                    <div class="stat-value">@Model.Count(x => x.CurrentStatus == "Teslim Edildi")</div>
+                </div>
+                <div class="stat-icon">
+                    <i class="bi bi-check-circle"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-header">
+                <div>
+                    <div class="stat-label">Yolda</div>
+                    <div class="stat-value">@Model.Count(x => x.CurrentStatus == "Yolda" || x.CurrentStatus == "Dağıtımda")</div>
+                </div>
+                <div class="stat-icon">
+                    <i class="bi bi-truck"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-header">
+                <div>
+                    <div class="stat-label">Bu Hafta</div>
+                    <div class="stat-value">@(Model.Count > 0 ? Math.Min(Model.Count, 12) : 0)</div>
+                </div>
+                <div class="stat-icon">
+                    <i class="bi bi-calendar-week"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Control Bar -->
+    <div class="control-bar">
+        <div class="search-box">
+            <i class="bi bi-search search-icon"></i>
+            <input type="text" class="search-input" id="searchInput" placeholder="Takip numarası, gönderici veya alıcı ara..." />
+        </div>
+        <div class="filter-group">
+            <button class="filter-btn active" data-filter="all">Tümü</button>
+            <button class="filter-btn" data-filter="Gönderi Alındı">Alındı</button>
+            <button class="filter-btn" data-filter="Yolda">Yolda</button>
+            <button class="filter-btn" data-filter="Dağıtımda">Dağıtımda</button>
+            <button class="filter-btn" data-filter="Teslim Edildi">Teslim Edildi</button>
+        </div>
+    </div>
+
+    <!-- Table -->
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-container">
+            <div class="table-wrapper">
+                <table class="shipment-table" id="shipmentTable">
+                    <thead>
+                        <tr>
+                            <th>Takip No</th>
+                            <th>Gönderici</th>
+                            <th>Alıcı</th>
+                            <th>Rota</th>
+                            <th>Oluşturma</th>
+                            <th>Durum</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var shipment in Model)
+                        {
+                            <tr data-status="@shipment.CurrentStatus">
+                                <td>
+                                    <div class="tracking-cell">@shipment.TrackingNumber</div>
+                                </td>
+                                <td>
+                                    <div class="person-cell">
+                                        <div class="person-avatar">
+                                            @shipment.SenderName.Substring(0, 1).ToUpper()
+                                        </div>
+                                        <span class="person-name">@shipment.SenderName</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="person-cell">
+                                        <div class="person-avatar">
+                                            @shipment.ReceiverName.Substring(0, 1).ToUpper()
+                                        </div>
+                                        <span class="person-name">@shipment.ReceiverName</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="route-cell">
+                                        <div class="route-item">
+                                            <i class="bi bi-geo-alt-fill route-icon"></i>
+                                            <span class="city-text">@shipment.OriginCity</span>
+                                            <span class="district-text">/ @shipment.OriginCity</span>
+                                        </div>
+                                        <div class="route-item">
+                                            <i class="bi bi-arrow-down route-icon"></i>
+                                        </div>
+                                        <div class="route-item">
+                                            <i class="bi bi-pin-map-fill route-icon"></i>
+                                            <span class="city-text">@shipment.DestinationCity</span>
+                                            <span class="district-text">/ @shipment.DestinationCity</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="date-cell">
+                                        @shipment.CreatedDate.ToString("dd.MM.yyyy HH:mm")
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="status-badge @GetStatusClass(shipment.CurrentStatus)">
+                                        <span class="status-dot"></span>
+                                        @shipment.CurrentStatus
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="actions-cell">
+                                        <a href="/Shipment/ShipmentDetails/@shipment.ShipmentId" 
+                                           class="action-btn view" 
+                                           data-tooltip="Görüntüle">
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
+                                        <a asp-controller="Shipment" asp-action="Edit" asp-route-id="@shipment.ShipmentId" 
+                                           class="action-btn edit" 
+                                           data-tooltip="Düzenle">
+                                            <i class="bi bi-pencil-fill"></i>
+                                        </a>
+                                         <a asp-controller="ShipmentTracking" asp-action="AddTracking" asp-route-trackingNumber="@shipment.TrackingNumber"
+                                           class="action-btn edit" 
+                                           data-tooltip="Kargo Hareketleri">
+                                            <i class="bi bi-truck"></i>
+                                        </a>
+
+                                        <a asp-controller="Shipment" asp-action="Delete" asp-route-id="@shipment.ShipmentId" 
+                                           class="action-btn delete" 
+                                           data-tooltip="Sil"
+                                           onclick="return confirm('Bu gönderiyi silmek istediğinizden emin misiniz?')">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="page-btn" disabled>
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <div class="empty-icon">
+                <i class="bi bi-inbox"></i>
+            </div>
+            <h3 class="empty-title">Henüz Gönderi Yok</h3>
+            <p class="empty-text">Yeni bir kargo gönderi oluşturarak başlayın</p>
+            <a asp-controller="Shipment" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i>
+                İlk Gönderiyi Oluştur
+            </a>
+        </div>
+    }
+</div>
+
+@functions {
+    string GetStatusClass(string status)
+    {
+        return status switch
+        {
+            "Gönderi Alındı" => "received",
+            "Transfer Merkezinde" => "transit",
+            "Yolda" => "transit",
+            "Dağıtımda" => "delivery",
+            "Teslim Edildi" => "delivered",
+            _ => "transit"
+        };
+    }
+}
+
+@section Scripts {
+    <script src="~/js/views/Shipment/Index.js" asp-append-version="true"></script>
+}
+
+
+
+

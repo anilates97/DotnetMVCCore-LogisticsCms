@@ -1,0 +1,167 @@
+@model LoginViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Admin Giriş";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - LogisticsCMS</title>
+    <link href="/templates/assets/admin/css/app.min.css" rel="stylesheet" type="text/css" />
+    <link href="/templates/assets/admin/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, rgba(8, 131, 149, 0.22), transparent 35%),
+                linear-gradient(135deg, #0f172a 0%, #0a4d68 45%, #f8fafc 45%, #eef6f7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .login-shell {
+            width: 100%;
+            max-width: 980px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            background: rgba(255,255,255,0.94);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 24px 80px rgba(15, 23, 42, 0.22);
+        }
+
+        .login-brand {
+            padding: 56px 48px;
+            color: #f8fafc;
+            background: linear-gradient(160deg, #0a4d68 0%, #088395 55%, #0f172a 100%);
+        }
+
+        .login-brand h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .login-brand p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: rgba(248, 250, 252, 0.82);
+        }
+
+        .login-points {
+            margin-top: 32px;
+            display: grid;
+            gap: 14px;
+        }
+
+        .login-point {
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .login-card {
+            padding: 56px 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .login-card-inner {
+            width: 100%;
+        }
+
+        .login-title {
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
+            color: #64748b;
+            margin-bottom: 28px;
+        }
+
+        .validation-summary-errors ul {
+            margin: 0 0 16px 0;
+            padding-left: 18px;
+        }
+
+        @@media (max-width: 900px) {
+            .login-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .login-brand,
+            .login-card {
+                padding: 36px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-shell">
+        <div class="login-brand">
+            <span class="badge bg-light text-dark px-3 py-2 mb-4">LogisticsCMS Admin</span>
+            <h1>Yönetim paneline giriş yapın</h1>
+            <p>
+                İçerik, kargo ve ana sayfa bölümlerini tek noktadan yönetmek için
+                admin hesabınızla oturum açın.
+            </p>
+
+            <div class="login-points">
+                <div class="login-point">
+                    <strong>Güvenli oturum</strong>
+                    <div class="text-white-50 mt-1">Cookie tabanlı doğrulama ile korunur.</div>
+                </div>
+                <div class="login-point">
+                    <strong>Merkezi yönetim</strong>
+                    <div class="text-white-50 mt-1">Tüm admin CRUD ekranları tek girişle açılır.</div>
+                </div>
+                <div class="login-point">
+                    <strong>İzlenebilirlik</strong>
+                    <div class="text-white-50 mt-1">Başarısız ve başarılı girişler loglanır.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-card">
+            <div class="login-card-inner">
+                <div class="login-title">Hoş geldiniz</div>
+                <div class="login-subtitle">Devam etmek için kullanıcı bilgilerinizi girin.</div>
+
+                <form asp-action="Login" method="post">
+                    @Html.AntiForgeryToken()
+                    <input asp-for="ReturnUrl" type="hidden" />
+
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Username" class="form-label">Kullanıcı Adı</label>
+                        <input asp-for="Username" class="form-control form-control-lg" autocomplete="username" />
+                        <span asp-validation-for="Username" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Password" class="form-label">Şifre</label>
+                        <input asp-for="Password" class="form-control form-control-lg" autocomplete="current-password" />
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 btn-lg">
+                        Giriş Yap
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <partial name="_ValidationScriptsPartial" />
+</body>
+</html>

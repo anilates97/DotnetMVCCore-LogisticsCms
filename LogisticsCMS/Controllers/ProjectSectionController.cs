@@ -1,88 +1,66 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using LogisticsCMS.Dtos.ProjectSectionDtos;
-using LogisticsCMS.Services.ProjectSectionService;
+using AutoMapper;
+using LogisticsCMS.Dtos.ProjectSection;
+using LogisticsCMS.Services.ProjectSection;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LogisticsCMS.Controllers
 {
-    public class ProjectSectionController : Controller
+    public class ProjectSectionController : CrudControllerBase
     {
         private readonly IProjectSectionService _projectSectionService;
+        private readonly IMapper _mapper;
 
-        public ProjectSectionController(IProjectSectionService projectSectionService)
+        public ProjectSectionController(IProjectSectionService projectSectionService, IMapper mapper)
         {
             _projectSectionService = projectSectionService;
+            _mapper = mapper;
         }
 
-        public async Task<IActionResult> ProjectSectionList()
+        public async Task<IActionResult> Index()
         {
             var values = await _projectSectionService.GetAllProjectSectionsAsync();
             return View(values);
         }
 
         [HttpGet]
-        public IActionResult CreateProjectSection()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProjectSection(CreateProjectSectionDto createProjectSectionDto)
+        public async Task<IActionResult> Create(CreateProjectSectionDto createDto)
         {
-            if (ModelState.IsValid)
-            {
-                await _projectSectionService.CreateProjectSectionAsync(createProjectSectionDto);
-                return RedirectToAction(nameof(ProjectSectionList));
-            }
-
-            return View(createProjectSectionDto);
+            return await SaveAndRedirectAsync(
+                createDto,
+                dto => _projectSectionService.CreateProjectSectionAsync(dto)
+            );
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateProjectSection(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var value = await _projectSectionService.GetProjectSectionByIdAsync(id);
-            if (value == null)
-            {
-                return NotFound();
-            }
-
-            var updateDto = new UpdateProjectSectionDto
-            {
-                ProjectSectionId = value.ProjectSectionId,
-                Title = value.Title,
-                Description = value.Description,
-                ImageUrl = value.ImageUrl,
-                Status = value.Status
-            };
-
-            return View(updateDto);
+            return await LoadEditViewAsync(
+                () => _projectSectionService.GetProjectSectionByIdAsync(id),
+                value => _mapper.Map<UpdateProjectSectionDto>(value)
+            );
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateProjectSection(UpdateProjectSectionDto updateProjectSectionDto)
+        public async Task<IActionResult> Edit(UpdateProjectSectionDto updateDto)
         {
-            if (ModelState.IsValid)
-            {
-                await _projectSectionService.UpdateProjectSectionAsync(updateProjectSectionDto);
-                return RedirectToAction(nameof(ProjectSectionList));
-            }
-
-            return View(updateProjectSectionDto);
+            return await SaveAndRedirectAsync(
+                updateDto,
+                dto => _projectSectionService.UpdateProjectSectionAsync(dto)
+            );
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteProjectSection(string id)
+        [AcceptVerbs("GET", "POST")]
+        public async Task<IActionResult> Delete(string id)
         {
-            await _projectSectionService.DeleteProjectSectionAsync(id);
-            return RedirectToAction(nameof(ProjectSectionList));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> DeleteProject(string id)
-        {
-            await _projectSectionService.DeleteProjectSectionAsync(id);
-            return RedirectToAction(nameof(ProjectSectionList));
+            return await DeleteAndRedirectAsync(
+                () => _projectSectionService.DeleteProjectSectionAsync(id)
+            );
         }
     }
 }
-

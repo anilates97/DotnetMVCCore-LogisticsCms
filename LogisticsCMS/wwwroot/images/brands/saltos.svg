@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="120" viewBox="0 0 320 120" fill="none">
+  <rect width="320" height="120" rx="24" fill="#F5FBFF"/>
+  <path d="M38 68C51 54 66 48 82 48C66 58 54 68 44 82C35 80 29 75 24 68C28 67 33 67 38 68Z" fill="#2B6CB0"/>
+  <path d="M54 58C67 44 84 37 102 37C87 49 74 61 63 74C58 69 56 64 54 58Z" fill="#4A90E2"/>
+  <path d="M70 52C82 40 99 34 117 34C103 45 90 55 78 67C74 62 72 57 70 52Z" fill="#7DB8FF"/>
+  <text x="128" y="58" fill="#1E3A5F" font-family="Manrope, Arial, sans-serif" font-size="30" font-weight="800">Saltos</text>
+  <text x="129" y="84" fill="#5E7D95" font-family="Manrope, Arial, sans-serif" font-size="18" font-weight="600">Logistic</text>
+</svg>

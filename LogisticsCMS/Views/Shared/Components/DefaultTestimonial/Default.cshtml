@@ -1,58 +1,39 @@
-﻿@model List<LogisticsCMS.Dtos.TestimonialDtos.ResultTestimonialDto>
+@model List<LogisticsCMS.Dtos.Testimonial.ResultTestimonialDto>
 
 @if (Model != null && Model.Any())
 {
-    <section class="section mt-50 bg-customers-say">
-        <div class="container">
-            <h2 class="title-favicon color-white mb-20 title-padding-left">What our customers are saying</h2>
-            <p class="font-lg color-white pl-55">Hear from our users who have shared their experience with our transport solutions.</p>
-        </div>
-        <div class="box-slide-customers mt-50">
-            <div class="box-swiper">
-                <div class="swiper-container swiper-group-3-customers pb-50">
-                    <div class="swiper-wrapper">
-                        @foreach (var testimonial in Model)
-                        {
-                            <div class="swiper-slide">
-                                <div class="card-testimonial-grid">
-                                    <div class="box-author mb-25">
-                                        <a href="#"><img src="@testimonial.ImageUrl" alt="@testimonial.NameSurname"></a>
-                                        <div class="author-info">
-                                            <a href="#"><span class="font-xl-bold color-brand-2 author-name">@testimonial.NameSurname</span></a>
-                                            <span class="font-sm color-grey-500 department">@testimonial.Title</span>
-                                        </div>
-                                    </div>
-                                    <p class="font-md color-grey-700">@testimonial.ReviewDetails</p>
-                                    <div class="card-bottom-info justify-content-between">
-                                        <div class="rating text-start">
-                                            @for (var i = 0; i < testimonial.ReviewScore; i++)
-                                            {
-                                                <img src="/templates/assets/imgs/template/icons/star.svg" alt="star">
-                                            }
-                                            <br>
-                                            <span class="font-sm color-white">Customer review</span>
-                                        </div>
-                                        <span class="font-xs color-grey-500 rate-post text-end">Rate: @testimonial.ReviewScore / 5</span>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                    <div class="box-pagination-customers">
-                        <div class="swiper-button-prev swiper-button-prev-customers swiper-button-prev-style-1">
-                            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path>
-                            </svg>
-                        </div>
-                        <div class="swiper-button-next swiper-button-next-customers swiper-button-next-style-1">
-                            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-}
+  <section class="testimonials-section section-padding" id="testimonial">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-badge">Müşteri Yorumları</span>
+        <h2 class="section-title">Müşterilerimiz Ne Diyor?</h2>
+        <p class="section-subtitle">Taşımacılık çözümlerimizi deneyimleyen müşterilerimizin görüşleri.</p>
+      </div>
 
+      <div class="testimonials-grid stagger">
+        @foreach (var testimonial in Model)
+        {
+          <div class="testimonial-card">
+            <div class="testimonial-author">
+              <img src="@testimonial.ImageUrl" alt="@testimonial.NameSurname" loading="lazy">
+              <div>
+                <div class="testimonial-name">@testimonial.NameSurname</div>
+                <div class="testimonial-title">@testimonial.Title</div>
+              </div>
+            </div>
+            <p>"@testimonial.ReviewDetails"</p>
+            <div class="testimonial-rating">
+              <div class="testimonial-stars">
+                @for (var i = 0; i < testimonial.ReviewScore; i++)
+                {
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                }
+              </div>
+              <span class="testimonial-rate">@testimonial.ReviewScore / 5</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+}

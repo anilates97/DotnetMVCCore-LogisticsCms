@@ -1,37 +1,71 @@
-﻿@model LogisticsCMS.Dtos.GetInTouchSectionDtos.ResultGetInTouchSectionDto
+@model LogisticsCMS.Dtos.GetInTouchSection.ResultGetInTouchSectionDto
 
+<!-- Get In Touch (Highlight CTA) -->
 @if (Model is not null)
 {
-    <section class="section mt-55 bg-1 position-relative pt-90 pb-90">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <span class="btn btn-tag">Get in touch</span>
-                    <h3 class="color-grey-900 mb-20 mt-15">@Model.MainTitle</h3>
-                    <p class="font-md color-grey-900 mb-40">@Model.Description</p>
-                    <div class="row">
-                        <div class="col-lg-6 mb-30">
-                            <h6 class="chart-title font-md-bold color-grey-900">@Model.Feature1Title</h6>
-                            <p class="font-xs color-grey-900">@Model.Feature1Description</p>
-                        </div>
-                        <div class="col-lg-6 mb-30">
-                            <h6 class="feature-title font-md-bold color-grey-900">@Model.Feature2Title</h6>
-                            <p class="font-xs color-grey-900">@Model.Feature2Description</p>
-                        </div>
-                    </div>
-                    <div class="mt-20">
-                        <a class="btn btn-brand-2 mr-20" href="contact.html">Contact Us</a>
-                        <a class="btn btn-link-medium" href="#">
-                            Learn More
-                            <svg class="w-6 h-6 icon-16 ml-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="box-image-touch" style="background-image:url('@Model.ImageUrl')"></div>
-    </section>
-}
+  <section class="touch-section">
+    <div class="container">
+      <div class="touch-inner">
+        <div class="touch-content">
+          <span class="section-badge touch-badge">İletişim</span>
 
+          <div class="touch-copy">
+            <h2>@Model.MainTitle</h2>
+            <p>@Model.Description</p>
+          </div>
+
+          <div class="touch-features">
+            <article class="touch-feature">
+              <div class="touch-feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 17l6-6 4 4 8-8" />
+                  <path d="M14 7h7v7" />
+                </svg>
+              </div>
+              <div class="touch-feature-body">
+                <h6>@Model.Feature1Title</h6>
+                <p>@Model.Feature1Description</p>
+              </div>
+            </article>
+
+            <article class="touch-feature">
+              <div class="touch-feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7l7-4Z" />
+                  <path d="m9.5 12 1.8 1.8L15 10.2" />
+                </svg>
+              </div>
+              <div class="touch-feature-body">
+                <h6>@Model.Feature2Title</h6>
+                <p>@Model.Feature2Description</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="touch-actions">
+            <a class="btn-primary" href="#contact">Bize Ulaşın</a>
+            <a class="btn-outline-white" href="#about">
+              Daha Fazla Bilgi
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="touch-visual">
+          <div class="touch-visual-orb touch-visual-orb-a"></div>
+          <div class="touch-visual-orb touch-visual-orb-b"></div>
+
+          <div class="touch-image-card">
+            <div class="touch-image-meta">
+              <span class="touch-image-pill">Operasyon Akışı</span>
+              <span class="touch-image-pill touch-image-pill-alt">7/24 Takip</span>
+            </div>
+            <div class="touch-image">
+              <img src="@Model.ImageUrl" alt="@Model.MainTitle" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+}

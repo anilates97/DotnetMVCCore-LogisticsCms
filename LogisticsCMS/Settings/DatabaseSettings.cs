@@ -1,6 +1,6 @@
 ﻿namespace LogisticsCMS.Settings
 {
-    public class DatabaseSettings : IDatabaseSettings
+    public class DatabaseSettings
     {
         public string ConnectionString { get; set; } = null!;
         public string DatabaseName { get; set; } = null!;

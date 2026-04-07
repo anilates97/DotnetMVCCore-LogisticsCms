@@ -1,80 +1,64 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using LogisticsCMS.Dtos.ShipmentDto;
-using LogisticsCMS.Services.ShipmentService;
+using AutoMapper;
+using LogisticsCMS.Dtos.Shipment;
+using LogisticsCMS.Services.Shipment;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LogisticsCMS.Controllers
 {
-    public class ShipmentController : Controller
+    public class ShipmentController : CrudControllerBase
     {
         private readonly IShipmentService _shipmentService;
+        private readonly IMapper _mapper;
 
-        public ShipmentController(IShipmentService shipmentService)
+        public ShipmentController(IShipmentService shipmentService, IMapper mapper)
         {
             _shipmentService = shipmentService;
+            _mapper = mapper;
         }
 
-        public async Task<IActionResult> ShipmentList()
+        public async Task<IActionResult> Index()
         {
             var shipments = await _shipmentService.GetAllShipmentsAsync();
             return View(shipments);
         }
 
         [HttpGet]
-        public IActionResult CreateShipment()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateShipment(CreateShipmentDto createShipmentDto)
+        public async Task<IActionResult> Create(CreateShipmentDto createShipmentDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(createShipmentDto);
-            }
-            await _shipmentService.CreateShipmentAsync(createShipmentDto);
-            return RedirectToAction("ShipmentList");
+            return await SaveAndRedirectAsync(
+                createShipmentDto,
+                dto => _shipmentService.CreateShipmentAsync(dto)
+            );
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateShipment(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var shipment = await _shipmentService.GetShipmentByIdAsync(id);
-            if (shipment == null)
-            {
-                return NotFound();
-            }
-            var newShipment = new UpdateShipmentDto
-            {
-                ShipmentId = shipment.ShipmentId,
-                TrackingNumber = shipment.TrackingNumber,
-                SenderName = shipment.SenderName,
-                ReceiverName = shipment.ReceiverName,
-                OriginCity = shipment.OriginCity,
-                DestinationCity = shipment.DestinationCity,
-                CreatedDate = shipment.CreatedDate,
-                CurrentStatus = shipment.CurrentStatus,
-            };
-            return View(newShipment);
+            return await LoadEditViewAsync(
+                () => _shipmentService.GetShipmentByIdAsync(id),
+                shipment => _mapper.Map<UpdateShipmentDto>(shipment)
+            );
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateShipment(UpdateShipmentDto updateShipmentDto)
+        public async Task<IActionResult> Edit(UpdateShipmentDto updateShipmentDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(updateShipmentDto);
-            }
-            await _shipmentService.UpdateShipmentAsync(updateShipmentDto);
-            return RedirectToAction("ShipmentList");
+            return await SaveAndRedirectAsync(
+                updateShipmentDto,
+                dto => _shipmentService.UpdateShipmentAsync(dto)
+            );
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteShipment(string id)
+        [AcceptVerbs("GET", "POST")]
+        public async Task<IActionResult> Delete(string id)
         {
-            await _shipmentService.DeleteShipmentAsync(id);
-            return RedirectToAction("ShipmentList");
+            return await DeleteAndRedirectAsync(() => _shipmentService.DeleteShipmentAsync(id));
         }
     }
 }
-

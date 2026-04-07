@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="120" viewBox="0 0 320 120" fill="none">
+  <rect width="320" height="120" rx="24" fill="#F8FCFD"/>
+  <circle cx="60" cy="60" r="26" fill="#102A43"/>
+  <path d="M60 26L66 45L84 51L66 58L60 78L54 58L36 51L54 45L60 26Z" fill="#F6C244"/>
+  <path d="M60 40C66 52 74 60 88 64C74 68 66 76 60 88C54 76 46 68 32 64C46 60 54 52 60 40Z" fill="#14B8A6"/>
+  <text x="108" y="69" fill="#142E46" font-family="Manrope, Arial, sans-serif" font-size="32" font-weight="800">CREATI</text>
+</svg>

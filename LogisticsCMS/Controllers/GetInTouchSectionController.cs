@@ -1,92 +1,66 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using LogisticsCMS.Dtos.GetInTouchSectionDtos;
-using LogisticsCMS.Services.GetInTouchSectionService;
+using AutoMapper;
+using LogisticsCMS.Dtos.GetInTouchSection;
+using LogisticsCMS.Services.GetInTouchSection;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LogisticsCMS.Controllers
 {
-    public class GetInTouchSectionController : Controller
+    public class GetInTouchSectionController : CrudControllerBase
     {
         private readonly IGetInTouchSectionService _getInTouchSectionService;
+        private readonly IMapper _mapper;
 
-        public GetInTouchSectionController(IGetInTouchSectionService getInTouchSectionService)
+        public GetInTouchSectionController(IGetInTouchSectionService getInTouchSectionService, IMapper mapper)
         {
             _getInTouchSectionService = getInTouchSectionService;
+            _mapper = mapper;
         }
 
-        public async Task<IActionResult> GetInTouchSectionList()
+        public async Task<IActionResult> Index()
         {
             var values = await _getInTouchSectionService.GetAllGetInTouchSectionsAsync();
             return View(values);
         }
 
         [HttpGet]
-        public IActionResult CreateGetInTouchSection()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateGetInTouchSection(CreateGetInTouchSectionDto createGetInTouchSectionDto)
+        public async Task<IActionResult> Create(CreateGetInTouchSectionDto createDto)
         {
-            if (ModelState.IsValid)
-            {
-                await _getInTouchSectionService.CreateGetInTouchSectionAsync(createGetInTouchSectionDto);
-                return RedirectToAction(nameof(GetInTouchSectionList));
-            }
-
-            return View(createGetInTouchSectionDto);
+            return await SaveAndRedirectAsync(
+                createDto,
+                dto => _getInTouchSectionService.CreateGetInTouchSectionAsync(dto)
+            );
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateGetInTouchSection(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var value = await _getInTouchSectionService.GetGetInTouchSectionByIdAsync(id);
-            if (value == null)
-            {
-                return NotFound();
-            }
-
-            var updateDto = new UpdateGetInTouchSectionDto
-            {
-                GetInTouchSectionId = value.GetInTouchSectionId,
-                MainTitle = value.MainTitle,
-                Description = value.Description,
-                Feature1Title = value.Feature1Title,
-                Feature1Description = value.Feature1Description,
-                Feature2Title = value.Feature2Title,
-                Feature2Description = value.Feature2Description,
-                ImageUrl = value.ImageUrl,
-                Status = value.Status
-            };
-
-            return View(updateDto);
+            return await LoadEditViewAsync(
+                () => _getInTouchSectionService.GetInTouchSectionByIdAsync(id),
+                value => _mapper.Map<UpdateGetInTouchSectionDto>(value)
+            );
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateGetInTouchSection(UpdateGetInTouchSectionDto updateGetInTouchSectionDto)
+        public async Task<IActionResult> Edit(UpdateGetInTouchSectionDto updateDto)
         {
-            if (ModelState.IsValid)
-            {
-                await _getInTouchSectionService.UpdateGetInTouchSectionAsync(updateGetInTouchSectionDto);
-                return RedirectToAction(nameof(GetInTouchSectionList));
-            }
-
-            return View(updateGetInTouchSectionDto);
+            return await SaveAndRedirectAsync(
+                updateDto,
+                dto => _getInTouchSectionService.UpdateGetInTouchSectionAsync(dto)
+            );
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteGetInTouchSection(string id)
+        [AcceptVerbs("GET", "POST")]
+        public async Task<IActionResult> Delete(string id)
         {
-            await _getInTouchSectionService.DeleteGetInTouchSectionAsync(id);
-            return RedirectToAction(nameof(GetInTouchSectionList));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> DeleteSection(string id)
-        {
-            await _getInTouchSectionService.DeleteGetInTouchSectionAsync(id);
-            return RedirectToAction(nameof(GetInTouchSectionList));
+            return await DeleteAndRedirectAsync(
+                () => _getInTouchSectionService.DeleteGetInTouchSectionAsync(id)
+            );
         }
     }
 }
-

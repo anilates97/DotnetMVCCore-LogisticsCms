@@ -18,7 +18,10 @@ namespace LogisticsCMS.Models
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
         public string CurrentStatus { get; set; } = null!;
 
+        public string OriginDistrict { get; set; } = null!;
+        public string DestinationDistrict { get; set; } = null!;
+        public string Address { get; set; } = null!;
+
         public List<ShipmentTracking> Trackings { get; set; } = new List<ShipmentTracking>();
     }
 }
-

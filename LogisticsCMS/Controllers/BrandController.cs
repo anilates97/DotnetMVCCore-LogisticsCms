@@ -1,75 +1,64 @@
-﻿using LogisticsCMS.Dtos.BrandDtos;
-using LogisticsCMS.Services.BrandService;
+using AutoMapper;
+using LogisticsCMS.Dtos.Brand;
+using LogisticsCMS.Services.Brand;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LogisticsCMS.Controllers
 {
-    public class BrandController : Controller
+    public class BrandController : CrudControllerBase
     {
         private readonly IBrandService _brandService;
+        private readonly IMapper _mapper;
 
-        public BrandController(IBrandService brandService)
+        public BrandController(IBrandService brandService, IMapper mapper)
         {
             _brandService = brandService;
+            _mapper = mapper;
         }
 
-        public async Task<IActionResult> BrandList()
+        public async Task<IActionResult> Index()
         {
             var brands = await _brandService.GetAllBrandsAsync();
             return View(brands);
         }
 
         [HttpGet]
-        public IActionResult CreateBrand()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBrand(CreateBrandDto createBrandDto)
+        public async Task<IActionResult> Create(CreateBrandDto createBrandDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(createBrandDto);
-            }
-            await _brandService.CreateBrandAsync(createBrandDto);
-            return RedirectToAction("BrandList");
+            return await SaveAndRedirectAsync(
+                createBrandDto,
+                dto => _brandService.CreateBrandAsync(dto)
+            );
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateBrand(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var brand = await _brandService.GetBrandByIdAsync(id);
-            if (brand == null)
-            {
-                return NotFound();
-            }
-            var newBrand = new GetBrandByIdDto
-            {
-                BrandId = brand.BrandId,
-                BrandName = brand.BrandName,
-                ImageUrl = brand.ImageUrl,
-                IsStatus = brand.IsStatus,
-            };
-            return View(newBrand);
+            return await LoadEditViewAsync(
+                () => _brandService.GetBrandByIdAsync(id),
+                brand => _mapper.Map<UpdateBrandDto>(brand)
+            );
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateBrand(UpdateBrandDto updateBrandDto)
+        public async Task<IActionResult> Edit(UpdateBrandDto updateBrandDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(updateBrandDto);
-            }
-            await _brandService.UpdateBrandAsync(updateBrandDto);
-            return RedirectToAction("BrandList");
+            return await SaveAndRedirectAsync(
+                updateBrandDto,
+                dto => _brandService.UpdateBrandAsync(dto)
+            );
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteBrand(string id)
+        [AcceptVerbs("GET", "POST")]
+        public async Task<IActionResult> Delete(string id)
         {
-            await _brandService.DeleteBrandAsync(id);
-            return RedirectToAction("BrandList");
+            return await DeleteAndRedirectAsync(() => _brandService.DeleteBrandAsync(id));
         }
     }
 }
