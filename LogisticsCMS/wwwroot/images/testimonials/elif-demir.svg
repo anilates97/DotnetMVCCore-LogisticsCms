@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title id="title">Elif Demir</title>
+  <rect width="96" height="96" rx="48" fill="#fce7f3"/>
+  <circle cx="48" cy="38" r="17" fill="#831843"/>
+  <path d="M20 84c4-20 17-31 28-31s24 11 28 31" fill="#db2777"/>
+  <text x="48" y="88" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="800" fill="#fdf2f8">ED</text>
+</svg>

@@ -2,8 +2,6 @@
 
 @if (Model != null && Model.Any())
 {
-  var featuredStep = Model.First();
-
   <section class="how-section section-padding" id="how-it-works">
     <div class="container">
       <div class="text-center">
@@ -16,7 +14,12 @@
         <div class="how-visual-card">
           <div class="how-visual-glow"></div>
           <div class="how-image-main">
-            <img src="@featuredStep.ImageUrl" alt="Lojistik operasyon görseli" loading="lazy">
+            <img src="/templates/assets/imgs/page/homepage1/how-it-work.png" alt="Lojistik operasyon akışı" loading="lazy">
+            <div class="how-dashboard">
+              <span>Canlı Plan</span>
+              <strong>98%</strong>
+              <small>Zamanında teslimat</small>
+            </div>
           </div>
           <div class="how-visual-badge">
             <span class="how-visual-badge-label">Operasyon Akışı</span>

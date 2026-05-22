@@ -86,7 +86,7 @@ public class AccountControllerTests
         Assert.Equal("/Question/Index", redirectResult.Url);
         Assert.Equal(CookieAuthenticationDefaults.AuthenticationScheme, authService.SignedInScheme);
         Assert.Equal("Admin", authService.SignedInPrincipal?.FindFirst(ClaimTypes.Role)?.Value);
-        Assert.Equal("Anil Ates", authService.SignedInPrincipal?.Identity?.Name);
+        Assert.Equal("Anıl Ateş", authService.SignedInPrincipal?.Identity?.Name);
     }
 
     [Fact]
@@ -94,7 +94,7 @@ public class AccountControllerTests
     {
         var authService = new FakeAuthenticationService();
         var user = new ClaimsPrincipal(
-            new ClaimsIdentity([new Claim(ClaimTypes.Name, "Anil Ates")], "TestAuth")
+            new ClaimsIdentity([new Claim(ClaimTypes.Name, "Anıl Ateş")], "TestAuth")
         );
         var controller = CreateController(authService: authService, user: user);
 
@@ -119,7 +119,7 @@ public class AccountControllerTests
                 {
                     Username = "admin",
                     PasswordHash = new AdminPasswordHasher().HashPassword("Admin123!"),
-                    DisplayName = "Anil Ates",
+                    DisplayName = "Anıl Ateş",
                 }
             ),
             new AdminPasswordHasher(),

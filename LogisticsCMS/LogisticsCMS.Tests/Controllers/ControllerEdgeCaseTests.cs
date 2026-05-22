@@ -103,7 +103,7 @@ public class ControllerEdgeCaseTests
                 {
                     Username = "admin",
                     PasswordHash = new AdminPasswordHasher().HashPassword("Admin123!"),
-                    DisplayName = "Anil Ates",
+                    DisplayName = "Anıl Ateş",
                 }
             ),
             new AdminPasswordHasher(),

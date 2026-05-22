@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="120" viewBox="0 0 240 120" role="img" aria-labelledby="title">
+  <title id="title">Karadeniz Nakliyat</title>
+  <rect width="240" height="120" rx="18" fill="#f8fafc"/>
+  <path d="M38 76h58l-10-28H48L38 76Z" fill="#334155"/>
+  <path d="M49 49 67 32l19 17H49Z" fill="#64748b"/>
+  <circle cx="52" cy="79" r="7" fill="#0f172a"/>
+  <circle cx="83" cy="79" r="7" fill="#0f172a"/>
+  <text x="113" y="53" font-family="Segoe UI, Arial, sans-serif" font-size="19" font-weight="800" fill="#111827">Karadeniz</text>
+  <text x="113" y="77" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#334155">Nakliyat</text>
+</svg>

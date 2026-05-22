@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="120" viewBox="0 0 240 120" role="img" aria-labelledby="title">
+  <title id="title">Anadolu Kargo</title>
+  <rect width="240" height="120" rx="18" fill="#f8fafc"/>
+  <path d="M42 72 70 32l28 40H82l-12-18-12 18H42Z" fill="#0f766e"/>
+  <path d="M71 32 98 72h-16L70 54l-12 18H42l28-40Z" fill="#14b8a6" opacity=".85"/>
+  <text x="116" y="55" font-family="Segoe UI, Arial, sans-serif" font-size="21" font-weight="800" fill="#111827">Anadolu</text>
+  <text x="116" y="78" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#0f766e">Kargo</text>
+</svg>

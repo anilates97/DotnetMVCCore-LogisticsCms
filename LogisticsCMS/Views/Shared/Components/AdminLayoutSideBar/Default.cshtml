@@ -1,73 +1,69 @@
 <div class="app-sidebar-menu">
     <div class="h-100" data-simplebar>
         <div id="sidebar-menu">
-            <div class="logo-box">
-                <a href="index.html" class="logo logo-light">
-                    <span class="logo-sm">
-                        <img src="/templates/assets/admin/images/logo-sm.png" alt="" height="22">
+            <div class="logo-box admin-logo-box">
+                <a asp-controller="Shipment" asp-action="Index" class="logo logo-light admin-brand-logo">
+                    <span class="admin-brand-image-wrap">
+                        <img src="~/templates/assets/imgs/template/logo.svg" alt="LojiS" class="admin-brand-image" />
                     </span>
-                    <span class="logo-lg">
-                        <img src="/templates/assets/admin/images/logo-light.png" alt="" height="24">
+                    <span class="admin-brand-copy">
+                        <small>Admin Panel</small>
                     </span>
                 </a>
-                <a href="index.html" class="logo logo-dark">
-                    <span class="logo-sm">
-                        <img src="/templates/assets/admin/images/logo-sm.png" alt="" height="22">
+                <a asp-controller="Shipment" asp-action="Index" class="logo logo-dark admin-brand-logo">
+                    <span class="admin-brand-image-wrap">
+                        <img src="~/templates/assets/imgs/template/logo.svg" alt="LojiS" class="admin-brand-image" />
                     </span>
-                    <span class="logo-lg">
-                        <img src="/templates/assets/admin/images/logo-dark.png" alt="" height="24">
+                    <span class="admin-brand-copy">
+                        <small>Admin Panel</small>
                     </span>
                 </a>
             </div>
 
             <ul id="side-menu">
-                <li class="menu-title">Menü</li>
-                <li class="menu-title mt-2">Ana Sayfa Bölümleri</li>
-
+                <li class="menu-title">İçerik Yönetimi</li>
                 <li>
-                    <a asp-controller="Slider" asp-action="Index" class="tp-link">
-                        <i data-feather="columns"></i>
-                        <span>Slider Listesi</span>
-                    </a>
-                    <a asp-controller="Brand" asp-action="Index" class="tp-link">
-                        <i data-feather="tag"></i>
-                        <span>Marka Listesi</span>
-                    </a>
-                    <a asp-controller="Offer" asp-action="Index" class="tp-link">
-                        <i data-feather="file-text"></i>
-                        <span>Teklif Listesi</span>
-                    </a>
-                    <a asp-controller="About" asp-action="Index" class="tp-link">
-                        <i data-feather="info"></i>
-                        <span>Hakkımızda Listesi</span>
-                    </a>
-                    <a asp-controller="GetInTouchSection" asp-action="Index" class="tp-link">
-                        <i data-feather="mail"></i>
-                        <span>İletişim Bölümü Listesi</span>
-                    </a>
-                    <a asp-controller="HowItWork" asp-action="Index" class="tp-link">
-                        <i data-feather="git-branch"></i>
-                        <span>Nasıl Çalışır Listesi</span>
-                    </a>
-                    <a asp-controller="Testimonial" asp-action="Index" class="tp-link">
-                        <i data-feather="message-circle"></i>
-                        <span>Yorum Listesi</span>
-                    </a>
-                    <a asp-controller="ProjectSection" asp-action="Index" class="tp-link">
-                        <i data-feather="briefcase"></i>
-                        <span>Proje Bölümü Listesi</span>
-                    </a>
-                    <a asp-controller="Question" asp-action="Index" class="tp-link">
-                        <i data-feather="help-circle"></i>
-                        <span>Soru Listesi</span>
-                    </a>
                     <a asp-controller="Shipment" asp-action="Index" class="tp-link">
                         <i data-feather="truck"></i>
                         <span>Kargo İşlemleri</span>
                     </a>
+                    <a asp-controller="Slider" asp-action="Index" class="tp-link">
+                        <i data-feather="columns"></i>
+                        <span>Slider</span>
+                    </a>
+                    <a asp-controller="Brand" asp-action="Index" class="tp-link">
+                        <i data-feather="tag"></i>
+                        <span>Markalar</span>
+                    </a>
+                    <a asp-controller="Offer" asp-action="Index" class="tp-link">
+                        <i data-feather="file-text"></i>
+                        <span>Hizmetler</span>
+                    </a>
+                    <a asp-controller="About" asp-action="Index" class="tp-link">
+                        <i data-feather="info"></i>
+                        <span>Hakkımızda</span>
+                    </a>
+                    <a asp-controller="GetInTouchSection" asp-action="Index" class="tp-link">
+                        <i data-feather="mail"></i>
+                        <span>İletişim Bölümü</span>
+                    </a>
+                    <a asp-controller="HowItWork" asp-action="Index" class="tp-link">
+                        <i data-feather="git-branch"></i>
+                        <span>Nasıl Çalışır</span>
+                    </a>
+                    <a asp-controller="Testimonial" asp-action="Index" class="tp-link">
+                        <i data-feather="message-circle"></i>
+                        <span>Yorumlar</span>
+                    </a>
+                    <a asp-controller="ProjectSection" asp-action="Index" class="tp-link">
+                        <i data-feather="briefcase"></i>
+                        <span>Projeler</span>
+                    </a>
+                    <a asp-controller="Question" asp-action="Index" class="tp-link">
+                        <i data-feather="help-circle"></i>
+                        <span>Sık Sorulan Sorular</span>
+                    </a>
                 </li>
-
-                <li class="menu-title mt-2">Genel</li>
             </ul>
         </div>
     </div>
