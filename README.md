@@ -62,15 +62,15 @@ The admin panel includes management screens for:
 
 ### Public Website
 
-![Public Website Home](LogisticsCMS/wwwroot/screenshots/public-home.png)
+![Public Website Home](LogisticsCMS/wwwroot/images/public-home.png)
 
 ### Admin Panel
 
-![Admin Panel](LogisticsCMS/wwwroot/screenshots/admin-panel.png)
+![Admin Panel](LogisticsCMS/wwwroot/images/admin-panel.png)
 
 ### Shipment Tracking
 
-![Shipment Tracking](LogisticsCMS/wwwroot/screenshots/shipment-tracking.png)
+![Shipment Tracking](LogisticsCMS/wwwroot/images/shipment-tracking.png)
 
 ---
 
